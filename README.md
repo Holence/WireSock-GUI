@@ -1,1 +1,1 @@
-# WireSock-for-NordVPN
+# WireSock for NordVPN
