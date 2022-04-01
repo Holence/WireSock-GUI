@@ -5,7 +5,7 @@ from MainSession import MainSession
 from Ui_MainWindow import Ui_MainWindow
 class MainWindow(Ui_MainWindow,QWidget):
 
-    connecting_exit=Signal()
+    instance_exist=Signal()
 
     def __init__(self, Headquarter:MainSession) -> None:
         super().__init__(Headquarter)
@@ -32,7 +32,7 @@ class MainWindow(Ui_MainWindow,QWidget):
     def onReadyReadStandardOutput(self):
         result = self.process.readAllStandardOutput().data().decode()
         if self.status==2 and "WireSock LightWeight WireGuard VPN Client is running already. Exit the second instance" in result:
-            self.connecting_exit.emit()
+            self.instance_exist.emit()
             DTFrame.DTMessageBox(
                 self.window(),
                 "Warning",
@@ -46,29 +46,32 @@ class MainWindow(Ui_MainWindow,QWidget):
 
         self.pushButton_wg_file.clicked.connect(self.setWGDir)
         self.lineEdit_wg_private_key.textEdited.connect(self.setWGPriKey)
-        self.comboBox_wg.currentIndexChanged.connect(self.setWGServer)
+        self.comboBox_wg.activated.connect(self.setWGServer)
 
         self.pushButton_sock_file.clicked.connect(self.setSockDir)
         self.lineEdit_sock_un.textEdited.connect(self.setSockUN)
         self.lineEdit_sock_pw.textEdited.connect(self.setSockPW)
-        self.comboBox_sock.currentIndexChanged.connect(self.setSockServer)
+        self.comboBox_sock.activated.connect(self.setSockServer)
 
-        self.comboBox_log.currentIndexChanged.connect(self.setLogLevel)
+        self.comboBox_log.activated.connect(self.setLogLevel)
         self.pushButton_switch.clicked.connect(self.Switch)
 
-        def slot1():
-            self.current_ip=get_current_ip()
+        def update():
             self.updateStatus()
+            self.updateWGServers()
+            self.updateSockServers()
+            
+            self.current_ip=get_current_ip()
             self.Headquarter.app.showMessage(
-                "Check Status",
+                "Information",
                 "Current IP: %s\nTunnel %s"%(self.current_ip,self.status_list[self.status]),
                 DTIcon.Information()
             )
         
-        self.actionCheck_Status.triggered.connect(slot1)
-        self.actionCheck_Status.setIcon(IconFromCurrentTheme("refresh-cw.svg"))
+        self.actionUpdate.triggered.connect(update)
+        self.actionUpdate.setIcon(IconFromCurrentTheme("refresh-cw.svg"))
         
-        self.connecting_exit.connect(self.TunnelDisconnect)
+        self.instance_exist.connect(self.TunnelDisconnect)
     
     def initializeWindow(self):
         self.pushButton_switch.setFlat(True)
@@ -105,7 +108,7 @@ class MainWindow(Ui_MainWindow,QWidget):
             self.Headquarter.UserSetting().setValue("Setting/WGPriKey",self.wg_prikey)
         self.lineEdit_wg_private_key.setText(self.wg_prikey)
 
-        if self.wg_dir!=None:
+        if self.wg_dir:
             self.updateWGServers()
 
         ##########################################################
@@ -127,7 +130,7 @@ class MainWindow(Ui_MainWindow,QWidget):
             self.current_sock_index=int(self.current_sock_index)
         self.comboBox_sock.setCurrentIndex(self.current_sock_index)
         
-        if self.sock_dir!=None:
+        if self.sock_dir:
             self.updateSockServers()
         
         ##########################################################
@@ -210,7 +213,7 @@ class MainWindow(Ui_MainWindow,QWidget):
     def setSockDir(self):
         dir_dlg=QFileDialog(self,"Select Socks5 Servers List File Directory")
         dir=dir_dlg.getOpenFileUrl(filter="Text files (*.txt);;")
-        if dir:
+        if not dir[0].isEmpty():
             dir=dir[0].toString()[8:]
             dir=dir.replace("/","\\")
             self.sock_dir=dir
@@ -232,9 +235,12 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.comboBox_sock.clear()
         with open(self.sock_dir,"r") as f:
             for line in f.readlines():
-                ip=line.strip()
-                self.sock_servers.append(ip)
-                self.comboBox_sock.addItem(ip)
+                name,ip=map(str.strip,line.strip().split(","))
+                self.sock_servers.append({
+                    "name": name,
+                    "ip": ip
+                })
+                self.comboBox_sock.addItem(name+" | "+ip)
         
         self.comboBox_sock.setCurrentIndex(self.current_sock_index)
 
@@ -308,6 +314,10 @@ class MainWindow(Ui_MainWindow,QWidget):
         )
     
     def TunnelConnect(self):
+        if self.current_ip=="Failed":
+            DTFrame.DTMessageBox(self.window(),"Warning","Please press ctrl+r to update current ip first!",DTIcon.Warning())
+            return
+
         self.pushButton_wg_file.setEnabled(False)
         self.lineEdit_wg_private_key.setEnabled(False)
         self.comboBox_wg.setEnabled(False)
@@ -331,7 +341,7 @@ AllowedIPs = 0.0.0.0/0
 Endpoint = {self.wg_servers[self.current_wg_index]["ip"]}:51820
 Socks5ProxyUsername = {self.sock_un}
 Socks5ProxyPassword = {self.sock_pw}
-Socks5Proxy = {self.sock_servers[self.current_sock_index]}
+Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
 """)
 
         self.plainTextEdit.setPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")

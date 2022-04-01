@@ -15,10 +15,10 @@ class MainSession(DTSession.DTMainSession):
     def initializeSignal(self):
         super().initializeSignal()
 
-        self.addAction(self.mainwindow.actionCheck_Status)
+        self.addAction(self.mainwindow.actionUpdate)
 
     def initializeMenu(self):
-        self.addActionToMainMenu(self.mainwindow.actionCheck_Status)
+        self.addActionToMainMenu(self.mainwindow.actionUpdate)
         super().initializeMenu()
     
     def saveWindowStatus(self):

@@ -232,9 +232,12 @@
     </widget>
    </item>
   </layout>
-  <action name="actionCheck_Status">
+  <action name="actionUpdate">
    <property name="text">
-    <string>Check Status</string>
+    <string>Update</string>
+   </property>
+   <property name="toolTip">
+    <string>Update</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
