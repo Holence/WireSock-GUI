@@ -55,20 +55,8 @@ class MainWindow(Ui_MainWindow,QWidget):
 
         self.comboBox_log.activated.connect(self.setLogLevel)
         self.pushButton_switch.clicked.connect(self.Switch)
-
-        def update():
-            self.updateStatus()
-            self.updateWGServers()
-            self.updateSockServers()
-            
-            self.current_ip=get_current_ip()
-            self.Headquarter.app.showMessage(
-                "Information",
-                "Current IP: %s\nTunnel %s"%(self.current_ip,self.status_list[self.status]),
-                DTIcon.Information()
-            )
         
-        self.actionUpdate.triggered.connect(update)
+        self.actionUpdate.triggered.connect(self.refresh)
         self.actionUpdate.setIcon(IconFromCurrentTheme("refresh-cw.svg"))
         
         self.instance_exist.connect(self.TunnelDisconnect)
@@ -140,6 +128,24 @@ class MainWindow(Ui_MainWindow,QWidget):
             self.log_level="none"
             self.Headquarter.UserSetting().setValue("Setting/LogLevel",self.log_level)
         self.comboBox_log.setCurrentText(self.log_level)
+    
+    def refresh(self):
+        try:
+            self.updateWGServers()
+        except:
+            pass
+        try:
+            self.updateSockServers()
+        except:
+            pass
+        
+        self.current_ip=get_current_ip()
+        self.updateStatus()
+        self.Headquarter.app.showMessage(
+            "Information",
+            "Current IP: %s\nTunnel %s"%(self.current_ip,self.status_list[self.status]),
+            DTIcon.Information()
+        )
     
     def updateStatus(self):
         
