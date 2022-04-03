@@ -1,12 +1,16 @@
 from DTPySide import *
 
 def get_current_ip():
+    return get_current_info("ip")
 
+def get_current_info(key):
     try:
-        ip = json.loads(requests.get('https://api.ipify.org/?format=json',timeout=1).text)['ip']    
+        res = json.loads(requests.get('http://ipinfo.io/json',timeout=1).text)
+        if key=="all":
+            value=res
+        else:
+            value=res[key]
     except:
-        ip = "Failed"
-    
-    # print("Checking IP =", ip)
+        value="Failed"
 
-    return ip
+    return value

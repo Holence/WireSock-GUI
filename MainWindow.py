@@ -14,7 +14,6 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.status_list=["Disconnected","Connected","Connecting","Disconnecting"]
         self.rolllling=False
         self.status=0
-        self.current_ip=get_current_ip()
 
         self.initializeWindow()
         self.initializeSignal()
@@ -54,6 +53,9 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.comboBox_sock.activated.connect(self.setSockServer)
 
         self.comboBox_log.activated.connect(self.setLogLevel)
+        self.comboBox_connection_check.activated.connect(self.setConnectionCkeckKey)
+        self.lineEdit_connection_check.textEdited.connect(self.setConnectionCkeckValue)
+        self.plainTextEdit_extra_conf.editingFinished.connect(self.setExtraConfig)
         self.pushButton_switch.clicked.connect(self.Switch)
         
         self.actionUpdate.triggered.connect(self.refresh)
@@ -71,11 +73,18 @@ class MainWindow(Ui_MainWindow,QWidget):
             min-width: 26px;
             max-width: 26px;
         """)
-
+        self.setStyleSheet("QLabel { font-size:12pt; }")
         self.plainTextEdit.setStyleSheet("font-size:10pt")
+        self.plainTextEdit_extra_conf.setStyleSheet("font-size:10pt")
+        self.plainTextEdit_extra_conf.setPlaceholderText("""AllowedApps = firefox
+DisallowedApps = TIM
+AllowedIPs = 
+DisallowedIPs = 
+""")
 
         self.splitter.setStretchFactor(0,1)
-        self.splitter.setStretchFactor(1,3)
+        self.splitter.setStretchFactor(1,1)
+        self.splitter.setStretchFactor(2,10)
 
         ##########################################################
 
@@ -128,6 +137,19 @@ class MainWindow(Ui_MainWindow,QWidget):
             self.log_level="none"
             self.Headquarter.UserSetting().setValue("Setting/LogLevel",self.log_level)
         self.comboBox_log.setCurrentText(self.log_level)
+
+        cck=self.Headquarter.UserSetting().value("Setting/ConnectionCheckKey")
+        if cck==None:
+            cck=0
+            self.Headquarter.UserSetting().setValue("Setting/ConnectionCheckKey",cck)
+        else:
+            self.comboBox_connection_check.setCurrentText(cck)
+
+        ccv=self.Headquarter.UserSetting().value("Setting/ConnectionCheckValue")
+        self.lineEdit_connection_check.setText(ccv)
+
+        extra_conf=self.Headquarter.UserSetting().value("Setting/ExtraConfig")
+        self.plainTextEdit_extra_conf.setPlainText(extra_conf)
     
     def refresh(self):
         try:
@@ -139,18 +161,20 @@ class MainWindow(Ui_MainWindow,QWidget):
         except:
             pass
         
-        self.current_ip=get_current_ip()
         self.updateStatus()
-        self.Headquarter.app.showMessage(
-            "Information",
-            "Current IP: %s\nTunnel %s"%(self.current_ip,self.status_list[self.status]),
-            DTIcon.Information()
-        )
     
     def updateStatus(self):
         
+        info=get_current_info("all")
+        if info=="Failed":
+            status_text=f"   Tunnel {self.status_list[self.status]}  | Failed   "
+        else:
+            status_text=f"   Tunnel {self.status_list[self.status]}  | {info['ip']}  |  {info['country']}, {info['region']}, {info['city']}  |  {info['loc']}  |  {info['org']}  |  {info['timezone']}   "
+        
+        self.Headquarter.setStatusTip(status_text)
+        
         if self.status==1:
-            self.Headquarter.setStatusTip("  Tunnel Connected  |  Current IP: %s"%self.current_ip)
+
             self.Headquarter.statusBar.setStyleSheet("color: #66d589")
 
             self.pushButton_switch.setIcon(IconFromCurrentTheme("wifi.svg"))
@@ -165,7 +189,7 @@ class MainWindow(Ui_MainWindow,QWidget):
             """)
         
         elif self.status==0:
-            self.Headquarter.setStatusTip("  Tunnel Disconnected  |  Current IP: %s"%self.current_ip)
+            
             self.Headquarter.statusBar.setStyleSheet("color: #fe5c5d")
 
             self.pushButton_switch.setIcon(IconFromCurrentTheme("wifi-off.svg"))
@@ -260,6 +284,16 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.log_level=self.comboBox_log.itemText(index)
         self.Headquarter.UserSetting().setValue("Setting/LogLevel",self.log_level)
     
+    def setConnectionCkeckKey(self,index):
+        cck=self.comboBox_connection_check.itemText(index)
+        self.Headquarter.UserSetting().setValue("Setting/ConnectionCheckKey",cck)
+    
+    def setConnectionCkeckValue(self,value):
+        self.Headquarter.UserSetting().setValue("Setting/ConnectionCheckValue",value)
+    
+    def setExtraConfig(self):
+        self.Headquarter.UserSetting().setValue("Setting/ExtraConfig",self.plainTextEdit_extra_conf.toPlainText())
+
     def rolling(self, delay_sec):
         
         if self.rolllling==True:
@@ -278,7 +312,7 @@ class MainWindow(Ui_MainWindow,QWidget):
                 self.rolllling=False
                 return
             
-            self.Headquarter.setStatusTip("  Tunnel %s %s |  Current IP: %s"%(self.status_list[self.status], rolling[i], self.current_ip))
+            self.Headquarter.setStatusTip("   Tunnel %s %s"%(self.status_list[self.status], rolling[i]))
             if i==len(rolling)-1:
                 i=0
             else:
@@ -294,8 +328,6 @@ class MainWindow(Ui_MainWindow,QWidget):
 
         self.rolling(2)
         
-        self.current_ip=get_current_ip()
-        
         self.status=0
         
         self.pushButton_wg_file.setEnabled(True)
@@ -306,6 +338,9 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.lineEdit_sock_un.setEnabled(True)
         self.lineEdit_sock_pw.setEnabled(True)
         self.comboBox_sock.setEnabled(True)
+        self.comboBox_connection_check.setEnabled(True)
+        self.lineEdit_connection_check.setEnabled(True)
+        self.plainTextEdit_extra_conf.setEnabled(True)
 
         self.comboBox_log.setEnabled(True)
 
@@ -314,15 +349,12 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.updateStatus()
 
         self.Headquarter.app.showMessage(
+            "Information",
             "Tunnel Disconnected",
-            "Current IP: %s"%self.current_ip,
             DTIcon.Information()
         )
     
     def TunnelConnect(self):
-        if self.current_ip=="Failed":
-            DTFrame.DTMessageBox(self.window(),"Warning","Please press ctrl+r to update current ip first!",DTIcon.Warning())
-            return
 
         self.pushButton_wg_file.setEnabled(False)
         self.lineEdit_wg_private_key.setEnabled(False)
@@ -334,6 +366,9 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.comboBox_sock.setEnabled(False)
 
         self.comboBox_log.setEnabled(False)
+        self.comboBox_connection_check.setEnabled(False)
+        self.lineEdit_connection_check.setEnabled(False)
+        self.plainTextEdit_extra_conf.setEnabled(False)
         
         with open("temp.conf","w") as f:
             f.write(f"""[Interface]
@@ -348,6 +383,7 @@ Endpoint = {self.wg_servers[self.current_wg_index]["ip"]}:51820
 Socks5ProxyUsername = {self.sock_un}
 Socks5ProxyPassword = {self.sock_pw}
 Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
+{self.plainTextEdit_extra_conf.toPlainText()}
 """)
 
         self.plainTextEdit.setPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")
@@ -358,11 +394,11 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
         self.status=2
         self.rolling(5)
         
-        old_ip=self.current_ip
+        old_value=self.lineEdit_connection_check.text()
         while True:
-            self.current_ip=get_current_ip()
+            new_value=get_current_info(self.comboBox_connection_check.currentText())
 
-            if old_ip!=self.current_ip and self.current_ip!="Failed":
+            if old_value!=new_value and new_value!="Failed":
                 self.status=1
                 break
             else:
@@ -374,13 +410,13 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
         self.updateStatus()
     
         self.Headquarter.app.showMessage(
+            "Information",
             "Tunnel Connected",
-            "Current IP: %s"%self.current_ip,
             DTIcon.Information()
         )
     
     def Switch(self):
-        if self.lineEdit_sock_pw.text()!="" and self.comboBox_wg.currentIndex()!=-1 and self.lineEdit_sock_un.text()!="" and self.lineEdit_sock_pw.text()!="" and self.comboBox_sock.currentIndex()!=-1:
+        if self.lineEdit_sock_pw.text()!="" and self.comboBox_wg.currentIndex()!=-1 and self.lineEdit_sock_un.text()!="" and self.lineEdit_sock_pw.text()!="" and self.comboBox_sock.currentIndex()!=-1 and self.lineEdit_connection_check.text()!="":
             if self.status==1 or self.status==2:
                 self.TunnelDisconnect()
             elif self.status==0:
