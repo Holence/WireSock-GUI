@@ -161,7 +161,7 @@ DisallowedIPs =
         except:
             pass
         
-        self.updateStatus()
+        QTimer.singleShot(0, self.updateStatus)
     
     def updateStatus(self):
         
@@ -308,7 +308,7 @@ DisallowedIPs =
         for j in range(steps_per_sec*delay_sec):
             
             if self.status==0 or self.status==1:
-                self.updateStatus()
+                QTimer.singleShot(0, self.updateStatus)
                 self.rolllling=False
                 return
             
@@ -346,7 +346,7 @@ DisallowedIPs =
 
         self.plainTextEdit.clear()
         
-        self.updateStatus()
+        QTimer.singleShot(0, self.updateStatus)
 
         self.Headquarter.app.showMessage(
             "Information",
@@ -407,7 +407,7 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
                 else:
                     return
         
-        self.updateStatus()
+        QTimer.singleShot(0, self.updateStatus)
     
         self.Headquarter.app.showMessage(
             "Information",
