@@ -47,6 +47,7 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.lineEdit_wg_private_key.textEdited.connect(self.setWGPriKey)
         self.comboBox_wg.activated.connect(self.setWGServer)
 
+        self.checkBox_sock5.stateChanged.connect(lambda :self.setSockEnable(self.checkBox_sock5.isChecked()))
         self.pushButton_sock_file.clicked.connect(self.setSockDir)
         self.lineEdit_sock_un.textEdited.connect(self.setSockUN)
         self.lineEdit_sock_pw.textEdited.connect(self.setSockPW)
@@ -55,6 +56,7 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.comboBox_log.activated.connect(self.setLogLevel)
         self.comboBox_connection_check.activated.connect(self.setConnectionCkeckKey)
         self.lineEdit_connection_check.textEdited.connect(self.setConnectionCkeckValue)
+        self.lineEdit_extra_CMD.textEdited.connect(self.setExtraCMD)
         self.plainTextEdit_extra_conf.editingFinished.connect(self.setExtraConfig)
         self.pushButton_switch.clicked.connect(self.Switch)
         
@@ -83,8 +85,7 @@ DisallowedIPs =
 """)
 
         self.splitter.setStretchFactor(0,1)
-        self.splitter.setStretchFactor(1,1)
-        self.splitter.setStretchFactor(2,10)
+        self.splitter.setStretchFactor(1,10)
 
         ##########################################################
 
@@ -110,6 +111,15 @@ DisallowedIPs =
 
         ##########################################################
 
+        self.sock_enable=self.Headquarter.UserSetting().value("Setting/SockEnable")
+        if self.sock_enable=="true":
+            self.sock_enable=True
+        else:
+            self.sock_enable=False
+        self.Headquarter.UserSetting().setValue("Setting/SockEnable",self.sock_enable)
+        self.checkBox_sock5.setChecked(self.sock_enable)
+        self.setSockEnable(self.sock_enable)
+        
         self.sock_dir=self.Headquarter.UserSetting().value("Setting/SockDir")
         self.lineEdit_sock_file.setText(self.sock_dir)
         
@@ -147,6 +157,9 @@ DisallowedIPs =
 
         ccv=self.Headquarter.UserSetting().value("Setting/ConnectionCheckValue")
         self.lineEdit_connection_check.setText(ccv)
+
+        extraCMD=self.Headquarter.UserSetting().value("Setting/ExtraCMD")
+        self.lineEdit_extra_CMD.setText(extraCMD)
 
         extra_conf=self.Headquarter.UserSetting().value("Setting/ExtraConfig")
         self.plainTextEdit_extra_conf.setPlainText(extra_conf)
@@ -239,6 +252,14 @@ DisallowedIPs =
         self.Headquarter.UserSetting().setValue("Setting/WGIndex",self.current_wg_index)
 
     ########################################################################
+    
+    def setSockEnable(self, enable):
+        self.sock_enable=enable
+        self.Headquarter.UserSetting().setValue("Setting/SockEnable",self.sock_enable)
+        self.pushButton_sock_file.setEnabled(self.sock_enable)
+        self.lineEdit_sock_un.setEnabled(self.sock_enable)
+        self.lineEdit_sock_pw.setEnabled(self.sock_enable)
+        self.comboBox_sock.setEnabled(self.sock_enable)
 
     def setSockDir(self):
         dir_dlg=QFileDialog(self,"Select Socks5 Servers List File Directory")
@@ -291,6 +312,9 @@ DisallowedIPs =
     def setConnectionCkeckValue(self,value):
         self.Headquarter.UserSetting().setValue("Setting/ConnectionCheckValue",value)
     
+    def setExtraCMD(self):
+        self.Headquarter.UserSetting().setValue("Setting/ExtraCMD",self.lineEdit_extra_CMD.text())
+    
     def setExtraConfig(self):
         self.Headquarter.UserSetting().setValue("Setting/ExtraConfig",self.plainTextEdit_extra_conf.toPlainText())
 
@@ -333,17 +357,21 @@ DisallowedIPs =
         self.pushButton_wg_file.setEnabled(True)
         self.lineEdit_wg_private_key.setEnabled(True)
         self.comboBox_wg.setEnabled(True)
-
-        self.pushButton_sock_file.setEnabled(True)
-        self.lineEdit_sock_un.setEnabled(True)
-        self.lineEdit_sock_pw.setEnabled(True)
-        self.comboBox_sock.setEnabled(True)
-        self.comboBox_connection_check.setEnabled(True)
-        self.lineEdit_connection_check.setEnabled(True)
-        self.plainTextEdit_extra_conf.setEnabled(True)
+        
+        self.checkBox_sock5.setEnabled(True)
+        if self.sock_enable:
+            self.pushButton_sock_file.setEnabled(True)
+            self.lineEdit_sock_un.setEnabled(True)
+            self.lineEdit_sock_pw.setEnabled(True)
+            self.comboBox_sock.setEnabled(True)
 
         self.comboBox_log.setEnabled(True)
-
+        self.lineEdit_extra_CMD.setEnabled(True)
+        self.plainTextEdit_extra_conf.setEnabled(True)
+        
+        self.comboBox_connection_check.setEnabled(True)
+        self.lineEdit_connection_check.setEnabled(True)
+        
         self.plainTextEdit.clear()
         
         QTimer.singleShot(0, self.updateStatus)
@@ -360,16 +388,20 @@ DisallowedIPs =
         self.lineEdit_wg_private_key.setEnabled(False)
         self.comboBox_wg.setEnabled(False)
 
-        self.pushButton_sock_file.setEnabled(False)
-        self.lineEdit_sock_un.setEnabled(False)
-        self.lineEdit_sock_pw.setEnabled(False)
-        self.comboBox_sock.setEnabled(False)
+        self.checkBox_sock5.setEnabled(False)
+        if self.sock_enable:
+            self.pushButton_sock_file.setEnabled(False)
+            self.lineEdit_sock_un.setEnabled(False)
+            self.lineEdit_sock_pw.setEnabled(False)
+            self.comboBox_sock.setEnabled(False)
 
         self.comboBox_log.setEnabled(False)
-        self.comboBox_connection_check.setEnabled(False)
-        self.lineEdit_connection_check.setEnabled(False)
+        self.lineEdit_extra_CMD.setEnabled(False)
         self.plainTextEdit_extra_conf.setEnabled(False)
         
+        self.comboBox_connection_check.setEnabled(False)
+        self.lineEdit_connection_check.setEnabled(False)
+
         with open("temp.conf","w") as f:
             f.write(f"""[Interface]
 PrivateKey = {self.wg_prikey}
@@ -380,16 +412,24 @@ DNS = 103.86.99.98, 103.86.96.98
 PublicKey = {self.wg_servers[self.current_wg_index]["pubkey"]}
 AllowedIPs = 0.0.0.0/0
 Endpoint = {self.wg_servers[self.current_wg_index]["ip"]}:51820
+{self.plainTextEdit_extra_conf.toPlainText()}
+""")
+            if self.sock_enable:
+                f.write(f"""
 Socks5ProxyUsername = {self.sock_un}
 Socks5ProxyPassword = {self.sock_pw}
 Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
-{self.plainTextEdit_extra_conf.toPlainText()}
 """)
+        self.plainTextEdit.clear()
 
-        self.plainTextEdit.setPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")
+        self.plainTextEdit.appendPlainText("Connecting to WireGuard Server %s: %s"%(self.wg_servers[self.current_wg_index]["name"],self.wg_servers[self.current_wg_index]["ip"]))
+        if self.sock_enable:
+            self.plainTextEdit.appendPlainText("Using Socks5 Server %s: %s"%(self.sock_servers[self.current_wg_index]["name"],self.sock_servers[self.current_wg_index]["ip"]))
+        self.plainTextEdit.appendPlainText("\nwiresock-client.exe run -log-level %s -config temp.conf %s\n"%(self.log_level, self.lineEdit_extra_CMD.text()))
+        self.plainTextEdit.appendPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")
         
         os.system("ipconfig.exe /flushdns")
-        self.process.start("wiresock-client.exe",["run","-log-level" ,self.log_level, "-config", "temp.conf"])
+        self.process.start("wiresock-client.exe", ["run","-log-level" ,self.log_level, "-config", "temp.conf", self.lineEdit_extra_CMD.text()])
         
         self.status=2
         self.rolling(5)
