@@ -234,13 +234,16 @@ DisallowedIPs =
         self.comboBox_wg.clear()
         with open(self.wg_dir,"r") as f:
             for line in f.readlines():
-                name,ip,pubkey=map(str.strip,line.strip().split(","))
-                self.wg_servers.append({
-                    "name":name,
-                    "ip":ip,
-                    "pubkey":pubkey
-                })
-                self.comboBox_wg.addItem(name+" | "+ip)
+                try:
+                    name,ip,pubkey=map(str.strip,line.strip().split(","))
+                    self.wg_servers.append({
+                        "name":name,
+                        "ip":ip,
+                        "pubkey":pubkey
+                    })
+                    self.comboBox_wg.addItem(name+" | "+ip)
+                except:
+                    pass
         self.comboBox_wg.setCurrentIndex(self.current_wg_index)
     
     def setWGPriKey(self,pk):
@@ -286,12 +289,15 @@ DisallowedIPs =
         self.comboBox_sock.clear()
         with open(self.sock_dir,"r") as f:
             for line in f.readlines():
-                name,ip=map(str.strip,line.strip().split(","))
-                self.sock_servers.append({
-                    "name": name,
-                    "ip": ip
-                })
-                self.comboBox_sock.addItem(name+" | "+ip)
+                try:
+                    name,ip=map(str.strip,line.strip().split(","))
+                    self.sock_servers.append({
+                        "name": name,
+                        "ip": ip
+                    })
+                    self.comboBox_sock.addItem(name+" | "+ip)
+                except:
+                    pass
         
         self.comboBox_sock.setCurrentIndex(self.current_sock_index)
 
