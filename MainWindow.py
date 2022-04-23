@@ -430,7 +430,7 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
 
         self.plainTextEdit.appendPlainText("Connecting to WireGuard Server %s: %s"%(self.wg_servers[self.current_wg_index]["name"],self.wg_servers[self.current_wg_index]["ip"]))
         if self.sock_enable:
-            self.plainTextEdit.appendPlainText("Using Socks5 Server %s: %s"%(self.sock_servers[self.current_wg_index]["name"],self.sock_servers[self.current_wg_index]["ip"]))
+            self.plainTextEdit.appendPlainText("Using Socks5 Server %s: %s"%(self.sock_servers[self.current_sock_index]["name"],self.sock_servers[self.current_sock_index]["ip"]))
         self.plainTextEdit.appendPlainText("\nwiresock-client.exe run -log-level %s -config temp.conf %s\n"%(self.log_level, self.lineEdit_extra_CMD.text()))
         self.plainTextEdit.appendPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")
         
