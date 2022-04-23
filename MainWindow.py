@@ -30,16 +30,16 @@ class MainWindow(Ui_MainWindow,QWidget):
 
     def onReadyReadStandardOutput(self):
         result = self.process.readAllStandardOutput().data().decode()
-        if self.status==2 and "WireSock LightWeight WireGuard VPN Client is running already. Exit the second instance" in result:
-            self.instance_exist.emit()
-            DTFrame.DTMessageBox(
-                self.window(),
-                "Warning",
-                "WireSock LightWeight WireGuard VPN Client is running already.\n\nPlease exit the first instance please.",
-                DTIcon.Warning()
-            )
-        else:
-            self.plainTextEdit.appendPlainText(result)
+        self.plainTextEdit.appendPlainText(result)
+        if self.status==2:
+            if "WireSock LightWeight WireGuard VPN Client is running already. Exit the second instance" in result:
+                self.instance_exist.emit()
+                DTFrame.DTMessageBox(
+                    self.window(),
+                    "Warning",
+                    "WireSock LightWeight WireGuard VPN Client is running already.\n\nPlease exit the first instance please.",
+                    DTIcon.Warning()
+                )
     
     def initializeSignal(self):
 
@@ -374,7 +374,7 @@ DisallowedIPs =
         
         self.plainTextEdit.clear()
         
-        QTimer.singleShot(0, self.updateStatus)
+        QTimer.singleShot(0, self.refresh)
 
         self.Headquarter.app.showMessage(
             "Information",
