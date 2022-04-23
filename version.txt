@@ -19,8 +19,8 @@ VSVersionInfo(
 				StringStruct(u'FileVersion', u'1.0.0.3'),
 				StringStruct(u'InternalName', u'DongliTeahouse'),
 				StringStruct(u'LegalCopyright', u'Copyright (C) 2021 DongliTeahouse. All rights reserved.'),
-				StringStruct(u'OriginalFilename', u'WireSock for NordVPN.exe'),
-				StringStruct(u'ProductName', u'WireSock for NordVPN'),
+				StringStruct(u'OriginalFilename', u'WireSock for Nord.exe'),
+				StringStruct(u'ProductName', u'WireSock for Nord'),
 				StringStruct(u'ProductVersion', u'1.0.0.3')])
 			]), 
 		VarFileInfo([VarStruct(u'Translation', [1033, 1200])])

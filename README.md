@@ -1,4 +1,4 @@
-# WireSock for NordVPN
+# WireSock for Nord
 
 Some useful links:
 
