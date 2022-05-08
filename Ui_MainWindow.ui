@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>665</width>
-    <height>406</height>
+    <width>850</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,47 +46,6 @@
         <property name="rightMargin">
          <number>0</number>
         </property>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>WireGuard Server</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEdit_wg_file">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="DTApplyButton" name="pushButton_wg_file">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QComboBox" name="comboBox_wg"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>WireGuard Private Key</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="lineEdit_wg_private_key"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>WireGuard IP List File</string>
-          </property>
-         </widget>
-        </item>
         <item row="6" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
@@ -99,6 +58,71 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEdit_wg_file">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>WireGuard Private Key</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="lineEdit_wg_private_key"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="DTApplyButton" name="pushButton_wg_file">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>WireGuard Server</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QComboBox" name="comboBox_wg"/>
+        </item>
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>WireGuard IP List File</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_openwg">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -116,40 +140,58 @@
         <property name="rightMargin">
          <number>0</number>
         </property>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_5">
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Socks5 Password</string>
+           <string>Get Sock5 Server from Nord API</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QLineEdit" name="lineEdit_sock_pw"/>
-        </item>
-        <item row="8" column="0">
+        <item row="10" column="0">
          <widget class="QComboBox" name="comboBox_sock"/>
         </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
+         <widget class="QComboBox" name="comboBox_nordapi">
+          <item>
+           <property name="text">
+            <string>https://api.nordvpn.com</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://zwyr157wwiu6eior.com</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://qfvi5yhkk86d38x.xyz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://nllp8upbpk2da4p.xyz</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="DTApplyButton" name="pushButton_sock_file">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="DTApplyButton" name="pushButton_getsock">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Socks5 Username</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Socks5 Server</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLineEdit" name="lineEdit_sock_un"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Socks5 List File</string>
           </property>
          </widget>
         </item>
@@ -160,14 +202,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="DTApplyButton" name="pushButton_sock_file">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
+        <item row="11" column="0">
          <spacer name="verticalSpacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -180,12 +215,63 @@
           </property>
          </spacer>
         </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Socks5 Server</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QCheckBox" name="checkBox_sock5">
           <property name="text">
            <string>Enable Sock5</string>
           </property>
          </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Socks5 Password</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLineEdit" name="lineEdit_sock_pw"/>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLineEdit" name="lineEdit_sock_un"/>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Socks5 List File</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_opensock">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -263,8 +349,30 @@
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QLabel" name="label_11">
+         <property name="toolTip">
+          <string>Check your original IP info at https://ipinfo.io/json and fill in the blank below.</string>
+         </property>
          <property name="text">
           <string>Connection Check</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPlainTextEdit" name="plainTextEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -292,36 +400,13 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Terminal</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPlainTextEdit" name="plainTextEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QComboBox" name="comboBox_connection_check">
+           <property name="toolTip">
+            <string>Check your original IP info at https://ipinfo.io/json and fill in the blank below.</string>
+           </property>
            <item>
             <property name="text">
              <string>ip</string>
@@ -362,11 +447,18 @@
          <item>
           <widget class="QLineEdit" name="lineEdit_connection_check">
            <property name="toolTip">
-            <string>check info at http://ipinfo.io/json</string>
+            <string>Check your original IP info at https://ipinfo.io/json and fill in the blank below.</string>
            </property>
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Terminal</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

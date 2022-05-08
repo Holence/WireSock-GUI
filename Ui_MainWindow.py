@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(665, 406)
+        MainWindow.resize(850, 486)
         self.actionUpdate = QAction(MainWindow)
         self.actionUpdate.setObjectName(u"actionUpdate")
         self.horizontalLayout = QHBoxLayout(MainWindow)
@@ -37,26 +37,15 @@ class Ui_MainWindow(object):
         self.gridLayout = QGridLayout(self.tab_wireguard)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, -1)
-        self.label_8 = QLabel(self.tab_wireguard)
-        self.label_8.setObjectName(u"label_8")
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout.addWidget(self.label_8, 4, 0, 1, 1)
+        self.gridLayout.addItem(self.verticalSpacer, 6, 0, 1, 1)
 
         self.lineEdit_wg_file = QLineEdit(self.tab_wireguard)
         self.lineEdit_wg_file.setObjectName(u"lineEdit_wg_file")
         self.lineEdit_wg_file.setReadOnly(True)
 
         self.gridLayout.addWidget(self.lineEdit_wg_file, 1, 0, 1, 1)
-
-        self.pushButton_wg_file = DTApplyButton(self.tab_wireguard)
-        self.pushButton_wg_file.setObjectName(u"pushButton_wg_file")
-
-        self.gridLayout.addWidget(self.pushButton_wg_file, 1, 1, 1, 1)
-
-        self.comboBox_wg = QComboBox(self.tab_wireguard)
-        self.comboBox_wg.setObjectName(u"comboBox_wg")
-
-        self.gridLayout.addWidget(self.comboBox_wg, 5, 0, 1, 1)
 
         self.label_2 = QLabel(self.tab_wireguard)
         self.label_2.setObjectName(u"label_2")
@@ -68,14 +57,39 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.lineEdit_wg_private_key, 3, 0, 1, 1)
 
+        self.pushButton_wg_file = DTApplyButton(self.tab_wireguard)
+        self.pushButton_wg_file.setObjectName(u"pushButton_wg_file")
+
+        self.gridLayout.addWidget(self.pushButton_wg_file, 1, 1, 1, 1)
+
+        self.label_8 = QLabel(self.tab_wireguard)
+        self.label_8.setObjectName(u"label_8")
+
+        self.gridLayout.addWidget(self.label_8, 4, 0, 1, 1)
+
+        self.comboBox_wg = QComboBox(self.tab_wireguard)
+        self.comboBox_wg.setObjectName(u"comboBox_wg")
+
+        self.gridLayout.addWidget(self.comboBox_wg, 5, 0, 1, 1)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.label = QLabel(self.tab_wireguard)
         self.label.setObjectName(u"label")
 
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.horizontalLayout_4.addWidget(self.label)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.pushButton_openwg = QPushButton(self.tab_wireguard)
+        self.pushButton_openwg.setObjectName(u"pushButton_openwg")
 
-        self.gridLayout.addItem(self.verticalSpacer, 6, 0, 1, 1)
+        self.horizontalLayout_4.addWidget(self.pushButton_openwg)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_2)
+
+
+        self.gridLayout.addLayout(self.horizontalLayout_4, 0, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_wireguard, "")
         self.tab_sock5 = QWidget()
@@ -83,40 +97,39 @@ class Ui_MainWindow(object):
         self.gridLayout_2 = QGridLayout(self.tab_sock5)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, -1)
-        self.label_5 = QLabel(self.tab_sock5)
-        self.label_5.setObjectName(u"label_5")
+        self.label_13 = QLabel(self.tab_sock5)
+        self.label_13.setObjectName(u"label_13")
 
-        self.gridLayout_2.addWidget(self.label_5, 5, 0, 1, 1)
-
-        self.lineEdit_sock_pw = QLineEdit(self.tab_sock5)
-        self.lineEdit_sock_pw.setObjectName(u"lineEdit_sock_pw")
-
-        self.gridLayout_2.addWidget(self.lineEdit_sock_pw, 6, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.label_13, 3, 0, 1, 1)
 
         self.comboBox_sock = QComboBox(self.tab_sock5)
         self.comboBox_sock.setObjectName(u"comboBox_sock")
 
-        self.gridLayout_2.addWidget(self.comboBox_sock, 8, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.comboBox_sock, 10, 0, 1, 1)
+
+        self.comboBox_nordapi = QComboBox(self.tab_sock5)
+        self.comboBox_nordapi.addItem("")
+        self.comboBox_nordapi.addItem("")
+        self.comboBox_nordapi.addItem("")
+        self.comboBox_nordapi.addItem("")
+        self.comboBox_nordapi.setObjectName(u"comboBox_nordapi")
+
+        self.gridLayout_2.addWidget(self.comboBox_nordapi, 4, 0, 1, 1)
+
+        self.pushButton_sock_file = DTApplyButton(self.tab_sock5)
+        self.pushButton_sock_file.setObjectName(u"pushButton_sock_file")
+
+        self.gridLayout_2.addWidget(self.pushButton_sock_file, 2, 1, 1, 1)
+
+        self.pushButton_getsock = DTApplyButton(self.tab_sock5)
+        self.pushButton_getsock.setObjectName(u"pushButton_getsock")
+
+        self.gridLayout_2.addWidget(self.pushButton_getsock, 4, 1, 1, 1)
 
         self.label_3 = QLabel(self.tab_sock5)
         self.label_3.setObjectName(u"label_3")
 
-        self.gridLayout_2.addWidget(self.label_3, 3, 0, 1, 1)
-
-        self.label_7 = QLabel(self.tab_sock5)
-        self.label_7.setObjectName(u"label_7")
-
-        self.gridLayout_2.addWidget(self.label_7, 7, 0, 1, 1)
-
-        self.lineEdit_sock_un = QLineEdit(self.tab_sock5)
-        self.lineEdit_sock_un.setObjectName(u"lineEdit_sock_un")
-
-        self.gridLayout_2.addWidget(self.lineEdit_sock_un, 4, 0, 1, 1)
-
-        self.label_6 = QLabel(self.tab_sock5)
-        self.label_6.setObjectName(u"label_6")
-
-        self.gridLayout_2.addWidget(self.label_6, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.label_3, 5, 0, 1, 1)
 
         self.lineEdit_sock_file = QLineEdit(self.tab_sock5)
         self.lineEdit_sock_file.setObjectName(u"lineEdit_sock_file")
@@ -124,19 +137,53 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.lineEdit_sock_file, 2, 0, 1, 1)
 
-        self.pushButton_sock_file = DTApplyButton(self.tab_sock5)
-        self.pushButton_sock_file.setObjectName(u"pushButton_sock_file")
-
-        self.gridLayout_2.addWidget(self.pushButton_sock_file, 2, 1, 1, 1)
-
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout_2.addItem(self.verticalSpacer_3, 9, 0, 1, 1)
+        self.gridLayout_2.addItem(self.verticalSpacer_3, 11, 0, 1, 1)
+
+        self.label_7 = QLabel(self.tab_sock5)
+        self.label_7.setObjectName(u"label_7")
+
+        self.gridLayout_2.addWidget(self.label_7, 9, 0, 1, 1)
 
         self.checkBox_sock5 = QCheckBox(self.tab_sock5)
         self.checkBox_sock5.setObjectName(u"checkBox_sock5")
 
         self.gridLayout_2.addWidget(self.checkBox_sock5, 0, 0, 1, 1)
+
+        self.label_5 = QLabel(self.tab_sock5)
+        self.label_5.setObjectName(u"label_5")
+
+        self.gridLayout_2.addWidget(self.label_5, 7, 0, 1, 1)
+
+        self.lineEdit_sock_pw = QLineEdit(self.tab_sock5)
+        self.lineEdit_sock_pw.setObjectName(u"lineEdit_sock_pw")
+
+        self.gridLayout_2.addWidget(self.lineEdit_sock_pw, 8, 0, 1, 1)
+
+        self.lineEdit_sock_un = QLineEdit(self.tab_sock5)
+        self.lineEdit_sock_un.setObjectName(u"lineEdit_sock_un")
+
+        self.gridLayout_2.addWidget(self.lineEdit_sock_un, 6, 0, 1, 1)
+
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.label_6 = QLabel(self.tab_sock5)
+        self.label_6.setObjectName(u"label_6")
+
+        self.horizontalLayout_3.addWidget(self.label_6)
+
+        self.pushButton_opensock = QPushButton(self.tab_sock5)
+        self.pushButton_opensock.setObjectName(u"pushButton_opensock")
+
+        self.horizontalLayout_3.addWidget(self.pushButton_opensock)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer)
+
+
+        self.gridLayout_2.addLayout(self.horizontalLayout_3, 1, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_sock5, "")
         self.tab_wiresock = QWidget()
@@ -194,6 +241,18 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.label_11, 0, 0, 1, 1)
 
+        self.plainTextEdit = QPlainTextEdit(self.layoutWidget1)
+        self.plainTextEdit.setObjectName(u"plainTextEdit")
+        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.plainTextEdit.sizePolicy().hasHeightForWidth())
+        self.plainTextEdit.setSizePolicy(sizePolicy1)
+        self.plainTextEdit.setMinimumSize(QSize(400, 0))
+        self.plainTextEdit.setReadOnly(True)
+
+        self.gridLayout_3.addWidget(self.plainTextEdit, 3, 0, 1, 1)
+
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalSpacer_2 = QSpacerItem(20, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
@@ -207,23 +266,6 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_3.addLayout(self.verticalLayout, 3, 1, 1, 1)
-
-        self.label_9 = QLabel(self.layoutWidget1)
-        self.label_9.setObjectName(u"label_9")
-
-        self.gridLayout_3.addWidget(self.label_9, 2, 0, 1, 1)
-
-        self.plainTextEdit = QPlainTextEdit(self.layoutWidget1)
-        self.plainTextEdit.setObjectName(u"plainTextEdit")
-        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Expanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.plainTextEdit.sizePolicy().hasHeightForWidth())
-        self.plainTextEdit.setSizePolicy(sizePolicy1)
-        self.plainTextEdit.setMinimumSize(QSize(300, 0))
-        self.plainTextEdit.setReadOnly(True)
-
-        self.gridLayout_3.addWidget(self.plainTextEdit, 3, 0, 1, 1)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -247,6 +289,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
 
+        self.label_9 = QLabel(self.layoutWidget1)
+        self.label_9.setObjectName(u"label_9")
+
+        self.gridLayout_3.addWidget(self.label_9, 2, 0, 1, 1)
+
         self.splitter.addWidget(self.layoutWidget1)
 
         self.horizontalLayout.addWidget(self.splitter)
@@ -269,17 +316,26 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.actionUpdate.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+R", None))
 #endif // QT_CONFIG(shortcut)
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"WireGuard Server", None))
-        self.pushButton_wg_file.setText("")
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"WireGuard Private Key", None))
+        self.pushButton_wg_file.setText("")
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"WireGuard Server", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"WireGuard IP List File", None))
+        self.pushButton_openwg.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_wireguard), QCoreApplication.translate("MainWindow", u"WireGuard", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Socks5 Password", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Get Sock5 Server from Nord API", None))
+        self.comboBox_nordapi.setItemText(0, QCoreApplication.translate("MainWindow", u"https://api.nordvpn.com", None))
+        self.comboBox_nordapi.setItemText(1, QCoreApplication.translate("MainWindow", u"https://zwyr157wwiu6eior.com", None))
+        self.comboBox_nordapi.setItemText(2, QCoreApplication.translate("MainWindow", u"https://qfvi5yhkk86d38x.xyz", None))
+        self.comboBox_nordapi.setItemText(3, QCoreApplication.translate("MainWindow", u"https://nllp8upbpk2da4p.xyz", None))
+
+        self.pushButton_sock_file.setText("")
+        self.pushButton_getsock.setText("")
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Socks5 Username", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Socks5 Server", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Socks5 List File", None))
-        self.pushButton_sock_file.setText("")
         self.checkBox_sock5.setText(QCoreApplication.translate("MainWindow", u"Enable Sock5", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Socks5 Password", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Socks5 List File", None))
+        self.pushButton_opensock.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_sock5), QCoreApplication.translate("MainWindow", u"Sock5", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Log Level", None))
         self.comboBox_log.setItemText(0, QCoreApplication.translate("MainWindow", u"none", None))
@@ -289,9 +345,11 @@ class Ui_MainWindow(object):
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Extended CMD", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Extended Configuration", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_wiresock), QCoreApplication.translate("MainWindow", u"WireSock", None))
+#if QT_CONFIG(tooltip)
+        self.label_11.setToolTip(QCoreApplication.translate("MainWindow", u"Check your original IP info at https://ipinfo.io/json and fill in the blank below.", None))
+#endif // QT_CONFIG(tooltip)
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Connection Check", None))
         self.pushButton_switch.setText("")
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Terminal", None))
         self.comboBox_connection_check.setItemText(0, QCoreApplication.translate("MainWindow", u"ip", None))
         self.comboBox_connection_check.setItemText(1, QCoreApplication.translate("MainWindow", u"city", None))
         self.comboBox_connection_check.setItemText(2, QCoreApplication.translate("MainWindow", u"region", None))
@@ -301,7 +359,11 @@ class Ui_MainWindow(object):
         self.comboBox_connection_check.setItemText(6, QCoreApplication.translate("MainWindow", u"timezone", None))
 
 #if QT_CONFIG(tooltip)
-        self.lineEdit_connection_check.setToolTip(QCoreApplication.translate("MainWindow", u"check info at http://ipinfo.io/json", None))
+        self.comboBox_connection_check.setToolTip(QCoreApplication.translate("MainWindow", u"Check your original IP info at https://ipinfo.io/json and fill in the blank below.", None))
 #endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.lineEdit_connection_check.setToolTip(QCoreApplication.translate("MainWindow", u"Check your original IP info at https://ipinfo.io/json and fill in the blank below.", None))
+#endif // QT_CONFIG(tooltip)
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Terminal", None))
     # retranslateUi
 
