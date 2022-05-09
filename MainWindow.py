@@ -338,7 +338,7 @@ DisallowedIPs =
             sock5_list=[]
             for i in servers:
                 if "sock" in i["hostname"]:
-                    sock5_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"],i["load"]))
+                    sock5_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
             sock5_list.sort(key=lambda x:x[-1])
 
             with open(self.sock_dir,"w") as f:
