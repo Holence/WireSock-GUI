@@ -8,3 +8,4 @@ Some useful links:
 - [NordVPN API v1](https://api.nordvpn.com/v1/servers) or [NordVPN API](https://api.nordvpn.com/server)
   - [Mirror Site](https://qfvi5yhkk86d38x.xyz/)
 - [WireSock – Advanced Network Security](https://www.wiresock.net/)
+- [Windows vpn split tunnelling](https://superuser.com/a/1468738)
