@@ -28,6 +28,6 @@ class MainSession(DTSession.DTMainSession):
     def quit(self):
         
         if self.mainwindow.status!=0:
-            self.mainwindow.TunnelDisconnect(silence=True)
+            self.mainwindow.TunnelDisconnect(showmessage=False)
         
         super().quit()

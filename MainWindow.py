@@ -448,7 +448,7 @@ DisallowedIPs =
         
         self.rolllling=False
 
-    def TunnelDisconnect(self, silence=False):
+    def TunnelDisconnect(self, showmessage=True):
         self.process.kill()
             
         # self.status=3
@@ -481,14 +481,14 @@ DisallowedIPs =
         
         QTimer.singleShot(0, self.refresh)
 
-        if silence==False:
+        if showmessage==True:
             self.Headquarter.app.showMessage(
                 "Information",
                 "Tunnel Disconnected",
                 DTIcon.Information()
             )
     
-    def TunnelConnect(self, silence=True):
+    def TunnelConnect(self, showmessage=True):
 
         self.pushButton_wg_file.setEnabled(False)
         self.lineEdit_wg_private_key.setEnabled(False)
@@ -528,6 +528,9 @@ Socks5ProxyUsername = {self.sock_un}
 Socks5ProxyPassword = {self.sock_pw}
 Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
 """)
+
+        self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon-wait.ico")))
+
         self.plainTextEdit.clear()
 
         self.plainTextEdit.appendPlainText("Connecting to WireGuard Server %s: %s"%(self.wg_servers[self.current_wg_index]["name"],self.wg_servers[self.current_wg_index]["ip"]))
@@ -561,7 +564,7 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
         
         self.updateStatus(info=info)
 
-        if silence==False:
+        if showmessage==True:
             self.Headquarter.app.showMessage(
                 "Information",
                 "Tunnel Connected",
