@@ -486,6 +486,11 @@
     <string>Toggle Connection</string>
    </property>
   </action>
+  <action name="actionEnable_Socks5">
+   <property name="text">
+    <string>Enable Socks5</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
