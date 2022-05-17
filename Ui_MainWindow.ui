@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
-    <height>486</height>
+    <width>785</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -170,6 +170,11 @@
           <item>
            <property name="text">
             <string>https://nllp8upbpk2da4p.xyz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://icpsuawn1zy5amys.com</string>
            </property>
           </item>
          </widget>
@@ -474,6 +479,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionToggle_Connection">
+   <property name="text">
+    <string>Toggle Connection</string>
    </property>
   </action>
  </widget>

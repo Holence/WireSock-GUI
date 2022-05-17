@@ -67,6 +67,8 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.actionUpdate.triggered.connect(self.refresh)
         self.actionUpdate.setIcon(IconFromCurrentTheme("refresh-cw.svg"))
         
+        self.actionToggle_Connection.triggered.connect(self.Switch)
+        
         self.instance_exist.connect(self.TunnelDisconnect)
     
     def initializeWindow(self):
@@ -205,11 +207,11 @@ DisallowedIPs =
         
         if self.status==1:
 
-            self.Headquarter.statusBar.setStyleSheet("color: #66d589")
+            self.Headquarter.statusBar.setStyleSheet("color: #7af64a")
 
             self.pushButton_switch.setIcon(IconFromCurrentTheme("wifi.svg"))
             self.pushButton_switch.setStyleSheet("""
-                background: #66d589;
+                background: #7af64a;
                 border: none;
                 icon-size: 22px;
                 max-height: 26px;
@@ -218,13 +220,17 @@ DisallowedIPs =
                 max-width: 26px;
             """)
         
+            self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon-on.ico")))
+            self.actionToggle_Connection.setIcon(IconFromCurrentTheme("wifi.svg"))
+            self.actionToggle_Connection.setText("Disconnected")
+
         elif self.status==0:
             
-            self.Headquarter.statusBar.setStyleSheet("color: #fe5c5d")
+            self.Headquarter.statusBar.setStyleSheet("color: #f54b79")
 
             self.pushButton_switch.setIcon(IconFromCurrentTheme("wifi-off.svg"))
             self.pushButton_switch.setStyleSheet("""
-                background: #fe5c5d;
+                background: #f54b79;
                 border: none;
                 icon-size: 22px;
                 max-height: 26px;
@@ -232,6 +238,10 @@ DisallowedIPs =
                 min-width: 26px;
                 max-width: 26px;
             """)
+            
+            self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon-down.ico")))
+            self.actionToggle_Connection.setIcon(IconFromCurrentTheme("wifi-off.svg"))
+            self.actionToggle_Connection.setText("Connected")
     
     def setWGDir(self):
         dir_dlg=QFileDialog(self,"Select WireGuard IP List File Directory")
@@ -449,8 +459,8 @@ DisallowedIPs =
         self.checkBox_sock5.setEnabled(True)
         if self.sock_enable:
             self.pushButton_sock_file.setEnabled(True)
-            self.comboBox_nordapi.setEnabled(self.sock_enable)
-            self.pushButton_getsock.setEnabled(self.sock_enable)
+            self.comboBox_nordapi.setEnabled(True)
+            self.pushButton_getsock.setEnabled(True)
             self.lineEdit_sock_un.setEnabled(True)
             self.lineEdit_sock_pw.setEnabled(True)
             self.comboBox_sock.setEnabled(True)
@@ -481,8 +491,8 @@ DisallowedIPs =
         self.checkBox_sock5.setEnabled(False)
         if self.sock_enable:
             self.pushButton_sock_file.setEnabled(False)
-            self.comboBox_nordapi.setEnabled(self.sock_enable)
-            self.pushButton_getsock.setEnabled(self.sock_enable)
+            self.comboBox_nordapi.setEnabled(False)
+            self.pushButton_getsock.setEnabled(False)
             self.lineEdit_sock_un.setEnabled(False)
             self.lineEdit_sock_pw.setEnabled(False)
             self.comboBox_sock.setEnabled(False)

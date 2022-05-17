@@ -20,9 +20,11 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(850, 486)
+        MainWindow.resize(785, 422)
         self.actionUpdate = QAction(MainWindow)
         self.actionUpdate.setObjectName(u"actionUpdate")
+        self.actionToggle_Connection = QAction(MainWindow)
+        self.actionToggle_Connection.setObjectName(u"actionToggle_Connection")
         self.horizontalLayout = QHBoxLayout(MainWindow)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.splitter = QSplitter(MainWindow)
@@ -108,6 +110,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.comboBox_sock, 10, 0, 1, 1)
 
         self.comboBox_nordapi = QComboBox(self.tab_sock5)
+        self.comboBox_nordapi.addItem("")
         self.comboBox_nordapi.addItem("")
         self.comboBox_nordapi.addItem("")
         self.comboBox_nordapi.addItem("")
@@ -316,6 +319,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.actionUpdate.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+R", None))
 #endif // QT_CONFIG(shortcut)
+        self.actionToggle_Connection.setText(QCoreApplication.translate("MainWindow", u"Toggle Connection", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"WireGuard Private Key", None))
         self.pushButton_wg_file.setText("")
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"WireGuard Server", None))
@@ -327,6 +331,7 @@ class Ui_MainWindow(object):
         self.comboBox_nordapi.setItemText(1, QCoreApplication.translate("MainWindow", u"https://zwyr157wwiu6eior.com", None))
         self.comboBox_nordapi.setItemText(2, QCoreApplication.translate("MainWindow", u"https://qfvi5yhkk86d38x.xyz", None))
         self.comboBox_nordapi.setItemText(3, QCoreApplication.translate("MainWindow", u"https://nllp8upbpk2da4p.xyz", None))
+        self.comboBox_nordapi.setItemText(4, QCoreApplication.translate("MainWindow", u"https://icpsuawn1zy5amys.com", None))
 
         self.pushButton_sock_file.setText("")
         self.pushButton_getsock.setText("")

@@ -18,6 +18,7 @@ class MainSession(DTSession.DTMainSession):
         self.addAction(self.mainwindow.actionUpdate)
 
     def initializeMenu(self):
+        self.addActionToMainMenu(self.mainwindow.actionToggle_Connection)
         self.addActionToMainMenu(self.mainwindow.actionUpdate)
         super().initializeMenu()
     
