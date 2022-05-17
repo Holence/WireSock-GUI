@@ -1,7 +1,7 @@
 VSVersionInfo(
 	ffi=FixedFileInfo(
-		filevers=(1, 0, 0, 4),
-		prodvers=(1, 0, 0, 4),
+		filevers=(1, 0, 0, 5),
+		prodvers=(1, 0, 0, 5),
 		mask=0x3f,
 		flags=0x0,
 		OS=0x40004,
@@ -16,12 +16,12 @@ VSVersionInfo(
 				u'040904B0',
 				[StringStruct(u'CompanyName', u'DongliTeahouse'),
 				StringStruct(u'FileDescription', u''),
-				StringStruct(u'FileVersion', u'1.0.0.4'),
+				StringStruct(u'FileVersion', u'1.0.0.5'),
 				StringStruct(u'InternalName', u'DongliTeahouse'),
 				StringStruct(u'LegalCopyright', u'Copyright (C) 2021 DongliTeahouse. All rights reserved.'),
 				StringStruct(u'OriginalFilename', u'WireSock for Nord.exe'),
 				StringStruct(u'ProductName', u'WireSock for Nord'),
-				StringStruct(u'ProductVersion', u'1.0.0.4')])
+				StringStruct(u'ProductVersion', u'1.0.0.5')])
 			]), 
 		VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
 	]
