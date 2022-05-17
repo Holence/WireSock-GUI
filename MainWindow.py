@@ -181,6 +181,9 @@ DisallowedIPs =
         self.plainTextEdit_extra_conf.setPlainText(extra_conf)
     
     def refresh(self):
+        if self.status==2 or self.status==3:
+            return
+        
         try:
             self.updateWGServers()
         except:
@@ -192,9 +195,11 @@ DisallowedIPs =
         
         QTimer.singleShot(0, self.updateStatus)
     
-    def updateStatus(self):
+    def updateStatus(self, info=None):
+        
         if self.status!=0:
-            info=get_current_info("all")
+            if info==None:
+                info=get_current_info("all")
         
             if info=="Failed":
                 status_text=f"   Tunnel {self.status_list[self.status]}  | Failed   "
@@ -443,7 +448,7 @@ DisallowedIPs =
         
         self.rolllling=False
 
-    def TunnelDisconnect(self):
+    def TunnelDisconnect(self, silence=False):
         self.process.kill()
             
         # self.status=3
@@ -476,13 +481,14 @@ DisallowedIPs =
         
         QTimer.singleShot(0, self.refresh)
 
-        self.Headquarter.app.showMessage(
-            "Information",
-            "Tunnel Disconnected",
-            DTIcon.Information()
-        )
+        if silence==False:
+            self.Headquarter.app.showMessage(
+                "Information",
+                "Tunnel Disconnected",
+                DTIcon.Information()
+            )
     
-    def TunnelConnect(self):
+    def TunnelConnect(self, silence=True):
 
         self.pushButton_wg_file.setEnabled(False)
         self.lineEdit_wg_private_key.setEnabled(False)
@@ -530,32 +536,37 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
         self.plainTextEdit.appendPlainText("\nwiresock-client.exe run -log-level %s -config temp.conf %s\n"%(self.log_level, self.lineEdit_extra_CMD.text()))
         self.plainTextEdit.appendPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")
         
-        os.system("ipconfig.exe /flushdns")
+        self.process.start("ipconfig.exe", ["/flushdns"])
+        self.process.waitForFinished()
         self.process.start("wiresock-client.exe", ["run","-log-level" ,self.log_level, "-config", "temp.conf", self.lineEdit_extra_CMD.text()])
         
         self.status=2
-        self.rolling(5)
+        wait=5
+        self.rolling(wait)
         
         old_value=self.lineEdit_connection_check.text()
         while True:
-            new_value=get_current_info(self.comboBox_connection_check.currentText())
-
-            if old_value!=new_value and new_value!="Failed":
-                self.status=1
-                break
-            else:
-                if self.status==2:
-                    self.rolling(5)
+            info=get_current_info('all')
+            if info!="Failed":
+                new_value=info[self.comboBox_connection_check.currentText()]
+                if old_value!=new_value:
+                    self.status=1
+                    break
                 else:
-                    return
+                    if self.status==2:
+                        self.rolling(wait)
+                        wait+=1
+                    else:
+                        return
         
-        QTimer.singleShot(0, self.updateStatus)
-    
-        self.Headquarter.app.showMessage(
-            "Information",
-            "Tunnel Connected",
-            DTIcon.Information()
-        )
+        self.updateStatus(info=info)
+
+        if silence==False:
+            self.Headquarter.app.showMessage(
+                "Information",
+                "Tunnel Connected",
+                DTIcon.Information()
+            )
     
     def Switch(self):
         if self.lineEdit_sock_pw.text()!="" and self.comboBox_wg.currentIndex()!=-1 and self.lineEdit_sock_un.text()!="" and self.lineEdit_sock_pw.text()!="" and self.comboBox_sock.currentIndex()!=-1 and self.lineEdit_connection_check.text()!="":
