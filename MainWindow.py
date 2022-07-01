@@ -632,9 +632,12 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
                 else:
                     if self.status==2:
                         self.rolling(wait)
-                        wait+=1
+                        wait+=2
                     else:
                         return
+            else:
+                self.rolling(wait)
+                wait+=2
         
         self.updateStatus(info=info)
 
