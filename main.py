@@ -5,7 +5,7 @@ app=DTAPP(sys.argv)
 
 app.setWindowIcon(QIcon(QPixmap("icon/icon.ico")))
 app.setApplicationName("WireSock for Nord")
-app.setApplicationVersion("1.0.0.6 build with DTPySide 0.1.5a")
+app.setApplicationVersion("1.0.0.6 build with DTPySide %s"%importlib.metadata.version('DTPySide'))
 app.setAuthor("鍵山狐")
 app.setQuitOnClickX(False)
 

@@ -1,4 +1,5 @@
 from DTPySide import *
+import requests
 
 def get_current_info(key):
     try:
