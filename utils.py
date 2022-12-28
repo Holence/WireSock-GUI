@@ -5,7 +5,7 @@ def get_current_info(key):
     try:
         url='https://ipinfo.io/json'
         pool=urllib3.connection_from_url(url,timeout=1)
-        r=pool.urlopen("GET",url)
+        r=pool.urlopen("GET","/")
         text=r.data.decode("utf-8")
         res = json.loads(text)
         if key=="all":
@@ -14,5 +14,4 @@ def get_current_info(key):
             value=res[key]
     except:
         value="Failed"
-
     return value
