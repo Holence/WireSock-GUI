@@ -387,9 +387,11 @@ DisallowedIPs =
             return
         
         try:
-            server_json = requests.get("%s/v1/servers?limit=20000"%self.comboBox_nordapi.currentText(),timeout=8)
-            server_json = server_json.content.decode("utf-8")
-            servers = json.loads(server_json)
+            url="%s/v1/servers?limit=20000"%self.comboBox_nordapi.currentText()
+            pool=urllib3.connection_from_url(url,timeout=8)
+            r=pool.urlopen("GET",url)
+            text=r.data.decode("utf-8")
+            servers = json.loads(text)
 
             socks5_list=[]
             for i in servers:
