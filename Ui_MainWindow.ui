@@ -126,9 +126,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_sock5">
+      <widget class="QWidget" name="tab_socks5">
        <attribute name="title">
-        <string>Sock5</string>
+        <string>Socks5</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <property name="leftMargin">
@@ -143,7 +143,7 @@
         <item row="3" column="0">
          <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Get Sock5 Server from Nord API</string>
+           <string>Get Socks5 Server from Nord API</string>
           </property>
          </widget>
         </item>
@@ -228,9 +228,9 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QCheckBox" name="checkBox_sock5">
+         <widget class="QCheckBox" name="checkBox_socks5">
           <property name="text">
-           <string>Enable Sock5</string>
+           <string>Enable Socks5</string>
           </property>
          </widget>
         </item>
@@ -355,7 +355,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_11">
          <property name="toolTip">
-          <string>Check your original IP info at https://ipinfo.io/json and fill in the blank below.</string>
+          <string>Check your original IP info at https://ipinfo.io/json and fill in the blank.</string>
          </property>
          <property name="text">
           <string>Connection Check</string>
@@ -410,7 +410,7 @@
          <item>
           <widget class="QComboBox" name="comboBox_connection_check">
            <property name="toolTip">
-            <string>Check your original IP info at https://ipinfo.io/json and fill in the blank below.</string>
+            <string>Check your original IP info at https://ipinfo.io/json and fill in the blank.</string>
            </property>
            <item>
             <property name="text">
@@ -452,7 +452,7 @@
          <item>
           <widget class="QLineEdit" name="lineEdit_connection_check">
            <property name="toolTip">
-            <string>Check your original IP info at https://ipinfo.io/json and fill in the blank below.</string>
+            <string>Check your original IP info at https://ipinfo.io/json and fill in the blank.</string>
            </property>
           </widget>
          </item>

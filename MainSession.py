@@ -56,3 +56,17 @@ class MainSession(DTSession.DTMainSession):
             self.mainwindow.TunnelDisconnect(showmessage=False)
         
         super().quit()
+    
+    def about(self):
+        about_text=""
+        
+        self.UserSetting().beginGroup("MetaData")
+        for key in self.UserSetting().allKeys():
+            about_text+="%s: %s\n"%(key,self.UserSetting().value(key))
+        self.UserSetting().endGroup()
+
+        about_text+="""\nThis is a SHELL without GHOST, so you must install WireSock VPN Client first!
+
+Download WireSock at https://www.wiresock.net/"""
+
+        DTFrame.DTMessageBox(self,"About",about_text,icon=DTIcon.Holo01())

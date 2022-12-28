@@ -48,7 +48,7 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.lineEdit_wg_private_key.textEdited.connect(self.setWGPriKey)
         self.comboBox_wg.activated.connect(self.setWGServer)
 
-        self.checkBox_sock5.stateChanged.connect(lambda :self.setSockEnable(self.checkBox_sock5.isChecked()))
+        self.checkBox_socks5.stateChanged.connect(lambda :self.setSockEnable(self.checkBox_socks5.isChecked()))
         self.pushButton_sock_file.clicked.connect(self.setSockDir)
         self.pushButton_opensock.clicked.connect(self.openSock)
         self.pushButton_getsock.clicked.connect(self.getSock)
@@ -92,6 +92,7 @@ class MainWindow(Ui_MainWindow,QWidget):
             max-width: 26px;
         """)
         self.setStyleSheet("QLabel { font-size:12pt; } QLineEdit,QComboBox,QPlainTextEdit {font-size: 11pt;}")
+        self.lineEdit_extra_CMD.setPlaceholderText("-lac")
         self.plainTextEdit_extra_conf.setPlaceholderText("""AllowedApps = firefox
 DisallowedApps = TIM
 AllowedIPs = 
@@ -137,7 +138,7 @@ DisallowedIPs =
         else:
             self.sock_enable=False
         self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.sock_enable)
-        self.checkBox_sock5.setChecked(self.sock_enable)
+        self.checkBox_socks5.setChecked(self.sock_enable)
         self.setSockEnable(self.sock_enable)
         
         self.sock_dir=self.Headquarter.UserSetting().value("Socks/SocksDir")
@@ -318,7 +319,7 @@ DisallowedIPs =
         for action in self.action_WG_list:
             self.Headquarter.menu_wireguard.addAction(action)
 
-        if self.current_wg_index==-1:
+        if self.current_wg_index==-1 or self.comboBox_wg.count()-1<self.current_wg_index:
             self.current_wg_index=0
         self.setWGServer(self.current_wg_index)
 
@@ -340,7 +341,7 @@ DisallowedIPs =
     
     def setSockEnable(self, enable):
         self.sock_enable=enable
-        self.checkBox_sock5.setChecked(self.sock_enable)
+        self.checkBox_socks5.setChecked(self.sock_enable)
         self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.sock_enable)
         self.pushButton_sock_file.setEnabled(self.sock_enable)
         self.comboBox_nordapi.setEnabled(self.sock_enable)
@@ -390,14 +391,14 @@ DisallowedIPs =
             server_json = server_json.content.decode("utf-8")
             servers = json.loads(server_json)
 
-            sock5_list=[]
+            socks5_list=[]
             for i in servers:
-                if "sock" in i["hostname"]:
-                    sock5_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
-            sock5_list.sort(key=lambda x:x[-1])
+                if "socks" in i["hostname"]:
+                    socks5_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
+            socks5_list.sort(key=lambda x:x[-1])
 
             with open(self.sock_dir,"w") as f:
-                for i in sock5_list:
+                for i in socks5_list:
                     f.write("%s,\t\t%s\t\t;%s\n"%(i[0],i[1],i[2]))
         
             self.updateSockServers()
@@ -448,7 +449,7 @@ DisallowedIPs =
         for action in self.action_Sock_list:
             self.Headquarter.menu_sock.addAction(action)
         
-        if self.current_sock_index==-1:
+        if self.current_sock_index==-1 or self.comboBox_sock.count()-1<self.current_sock_index:
             self.current_sock_index=0
         self.setSockServer(self.current_sock_index)
 
@@ -528,7 +529,7 @@ DisallowedIPs =
         self.comboBox_wg.setEnabled(True)
         self.Headquarter.menu_wireguard.setEnabled(True)
         
-        self.checkBox_sock5.setEnabled(True)
+        self.checkBox_socks5.setEnabled(True)
         self.actionEnable_Socks5.setEnabled(True)
         if self.sock_enable:
             self.pushButton_sock_file.setEnabled(True)
@@ -565,7 +566,7 @@ DisallowedIPs =
         self.comboBox_wg.setEnabled(False)
         self.Headquarter.menu_wireguard.setEnabled(False)
 
-        self.checkBox_sock5.setEnabled(False)
+        self.checkBox_socks5.setEnabled(False)
         self.actionEnable_Socks5.setEnabled(False)
         if self.sock_enable:
             self.pushButton_sock_file.setEnabled(False)
@@ -649,10 +650,19 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
             )
     
     def Switch(self):
-        if self.lineEdit_sock_pw.text()!="" and self.comboBox_wg.currentIndex()!=-1 and self.lineEdit_sock_un.text()!="" and self.lineEdit_sock_pw.text()!="" and self.comboBox_sock.currentIndex()!=-1 and self.lineEdit_connection_check.text()!="":
-            if self.status==1 or self.status==2:
-                self.TunnelDisconnect()
-            elif self.status==0:
+        if self.status==1 or self.status==2:
+            self.TunnelDisconnect()
+        elif self.status==0:
+            if self.lineEdit_wg_private_key.text()=="" or self.comboBox_wg.currentIndex()==-1:
+                DTFrame.DTMessageBox(self,"Warning","WireGuard info incomplete!",DTIcon.Warning())
+                return
+            if self.sock_enable:
+                if self.lineEdit_sock_un.text()=="" or self.lineEdit_sock_pw.text()=="" or self.comboBox_sock.currentIndex()==-1:
+                    DTFrame.DTMessageBox(self,"Warning","Socks5 info incomplete!",DTIcon.Warning())
+                    return
+            if self.lineEdit_connection_check.text()=="":
+                DTFrame.DTMessageBox(self,"Warning","Connection Check incomplete!",DTIcon.Warning())
+                return
+            else:
                 self.TunnelConnect()
-        else:
-            DTFrame.DTMessageBox(self,"Warning","Information incomplete!",DTIcon.Warning())
+    
