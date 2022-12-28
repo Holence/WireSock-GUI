@@ -2,6 +2,37 @@ from DTPySide import *
 
 from utils import *
 from MainSession import MainSession
+
+class RollingThread(QThread):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.papa=parent
+    
+    def run(self):
+        
+        wait=2
+        self.papa.rolling(wait)
+        
+        old_value=self.papa.lineEdit_connection_check.text()
+        while True:
+            info=get_current_info('all')
+            if info!="Failed":
+                new_value=info[self.papa.comboBox_connection_check.currentText()]
+                if old_value!=new_value:
+                    self.papa.status=1
+                    break
+                else:
+                    if self.papa.status==2:
+                        self.papa.rolling(wait)
+                        wait+=2
+                    else:
+                        return
+            else:
+                self.papa.rolling(wait)
+                wait+=2
+        
+        self.papa.updateStatus(info=info)
+
 from Ui_MainWindow import Ui_MainWindow
 class MainWindow(Ui_MainWindow,QWidget):
 
@@ -91,7 +122,7 @@ class MainWindow(Ui_MainWindow,QWidget):
             min-width: 26px;
             max-width: 26px;
         """)
-        self.setStyleSheet("QLabel { font-size:12pt; } QLineEdit,QComboBox,QPlainTextEdit {font-size: 11pt;}")
+        self.setStyleSheet("QLabel { font-size:12pt; } QCheckBox,QLineEdit,QComboBox,QPlainTextEdit {font-size: 11pt;}")
         self.lineEdit_extra_CMD.setPlaceholderText("-lac")
         self.plainTextEdit_extra_conf.setPlaceholderText("""AllowedApps = firefox
 DisallowedApps = TIM
@@ -104,9 +135,6 @@ DisallowedIPs =
         self.pushButton_openwg.setIcon(IconFromCurrentTheme("external-link.svg"))
         self.pushButton_opensock.setStyleSheet("QPushButton{ min-height:16px; max-height:16px; min-width:16px; max-width:16px; icon-size:12px; }")
         self.pushButton_opensock.setIcon(IconFromCurrentTheme("external-link.svg"))
-
-        self.splitter.setStretchFactor(0,1)
-        self.splitter.setStretchFactor(1,10)
 
         ##########################################################
 
@@ -519,10 +547,6 @@ DisallowedIPs =
 
     def TunnelDisconnect(self, showmessage=True):
         self.process.kill()
-            
-        # self.status=3
-
-        # self.rolling(2)
         
         self.status=0
         
@@ -619,37 +643,19 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
         self.process.start("ipconfig.exe", ["/flushdns"])
         self.process.waitForFinished()
         self.process.start("wiresock-client.exe", ["run","-log-level" ,self.log_level, "-config", "temp.conf", self.lineEdit_extra_CMD.text()])
-        
         self.status=2
-        wait=5
-        self.rolling(wait)
-        
-        old_value=self.lineEdit_connection_check.text()
-        while True:
-            info=get_current_info('all')
-            if info!="Failed":
-                new_value=info[self.comboBox_connection_check.currentText()]
-                if old_value!=new_value:
-                    self.status=1
-                    break
-                else:
-                    if self.status==2:
-                        self.rolling(wait)
-                        wait+=2
-                    else:
-                        return
-            else:
-                self.rolling(wait)
-                wait+=2
-        
-        self.updateStatus(info=info)
 
-        if showmessage==True:
-            self.Headquarter.app.showMessage(
-                "Information",
-                "Tunnel Connected",
-                DTIcon.Information()
-            )
+        def slot():
+            if self.status==1:
+                self.Headquarter.app.showMessage(
+                    "Information",
+                    "Tunnel Connected",
+                    DTIcon.Information()
+                )
+
+        self.rolling_thread=RollingThread(self)
+        self.rolling_thread.start()
+        self.rolling_thread.finished.connect(slot)
     
     def Switch(self):
         if self.status==1 or self.status==2:

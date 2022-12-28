@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(785, 422)
+        MainWindow.resize(885, 459)
         self.actionUpdate = QAction(MainWindow)
         self.actionUpdate.setObjectName(u"actionUpdate")
         self.actionToggle_Connection = QAction(MainWindow)
@@ -29,12 +29,15 @@ class Ui_MainWindow(object):
         self.actionEnable_Socks5.setObjectName(u"actionEnable_Socks5")
         self.horizontalLayout = QHBoxLayout(MainWindow)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.splitter = QSplitter(MainWindow)
-        self.splitter.setObjectName(u"splitter")
-        self.splitter.setOrientation(Qt.Horizontal)
-        self.tabWidget = QTabWidget(self.splitter)
+        self.tabWidget = QTabWidget(MainWindow)
         self.tabWidget.setObjectName(u"tabWidget")
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
+        self.tabWidget.setSizePolicy(sizePolicy)
         self.tabWidget.setMinimumSize(QSize(300, 0))
+        self.tabWidget.setMaximumSize(QSize(300, 16777215))
         self.tabWidget.setTabPosition(QTabWidget.South)
         self.tab_wireguard = QWidget()
         self.tab_wireguard.setObjectName(u"tab_wireguard")
@@ -233,37 +236,33 @@ class Ui_MainWindow(object):
 
         self.plainTextEdit_extra_conf = DTPlainTextEdit(self.tab_wiresock)
         self.plainTextEdit_extra_conf.setObjectName(u"plainTextEdit_extra_conf")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.plainTextEdit_extra_conf.sizePolicy().hasHeightForWidth())
-        self.plainTextEdit_extra_conf.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.plainTextEdit_extra_conf.sizePolicy().hasHeightForWidth())
+        self.plainTextEdit_extra_conf.setSizePolicy(sizePolicy1)
 
         self.verticalLayout_2.addWidget(self.plainTextEdit_extra_conf)
 
         self.tabWidget.addTab(self.tab_wiresock, "")
-        self.splitter.addWidget(self.tabWidget)
-        self.layoutWidget1 = QWidget(self.splitter)
-        self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.gridLayout_3 = QGridLayout(self.layoutWidget1)
+
+        self.horizontalLayout.addWidget(self.tabWidget)
+
+        self.horizontalSpacer_3 = QSpacerItem(10, 0, QSizePolicy.Fixed, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer_3)
+
+        self.gridLayout_3 = QGridLayout()
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.label_11 = QLabel(self.layoutWidget1)
+        self.label_11 = QLabel(MainWindow)
         self.label_11.setObjectName(u"label_11")
 
         self.gridLayout_3.addWidget(self.label_11, 0, 0, 1, 1)
 
-        self.plainTextEdit = QPlainTextEdit(self.layoutWidget1)
-        self.plainTextEdit.setObjectName(u"plainTextEdit")
-        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Expanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.plainTextEdit.sizePolicy().hasHeightForWidth())
-        self.plainTextEdit.setSizePolicy(sizePolicy1)
-        self.plainTextEdit.setMinimumSize(QSize(400, 0))
-        self.plainTextEdit.setReadOnly(True)
+        self.label_9 = QLabel(MainWindow)
+        self.label_9.setObjectName(u"label_9")
 
-        self.gridLayout_3.addWidget(self.plainTextEdit, 3, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.label_9, 2, 0, 1, 1)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -271,7 +270,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
 
-        self.pushButton_switch = QPushButton(self.layoutWidget1)
+        self.pushButton_switch = QPushButton(MainWindow)
         self.pushButton_switch.setObjectName(u"pushButton_switch")
 
         self.verticalLayout.addWidget(self.pushButton_switch)
@@ -281,7 +280,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.comboBox_connection_check = QComboBox(self.layoutWidget1)
+        self.comboBox_connection_check = QComboBox(MainWindow)
         self.comboBox_connection_check.addItem("")
         self.comboBox_connection_check.addItem("")
         self.comboBox_connection_check.addItem("")
@@ -293,7 +292,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.comboBox_connection_check)
 
-        self.lineEdit_connection_check = QLineEdit(self.layoutWidget1)
+        self.lineEdit_connection_check = QLineEdit(MainWindow)
         self.lineEdit_connection_check.setObjectName(u"lineEdit_connection_check")
 
         self.horizontalLayout_2.addWidget(self.lineEdit_connection_check)
@@ -301,14 +300,20 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
 
-        self.label_9 = QLabel(self.layoutWidget1)
-        self.label_9.setObjectName(u"label_9")
+        self.plainTextEdit = QPlainTextEdit(MainWindow)
+        self.plainTextEdit.setObjectName(u"plainTextEdit")
+        sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Expanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.plainTextEdit.sizePolicy().hasHeightForWidth())
+        self.plainTextEdit.setSizePolicy(sizePolicy2)
+        self.plainTextEdit.setMinimumSize(QSize(500, 375))
+        self.plainTextEdit.setReadOnly(True)
 
-        self.gridLayout_3.addWidget(self.label_9, 2, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.plainTextEdit, 3, 0, 1, 1)
 
-        self.splitter.addWidget(self.layoutWidget1)
 
-        self.horizontalLayout.addWidget(self.splitter)
+        self.horizontalLayout.addLayout(self.gridLayout_3)
 
 
         self.retranslateUi(MainWindow)
@@ -371,6 +376,7 @@ class Ui_MainWindow(object):
         self.label_11.setToolTip(QCoreApplication.translate("MainWindow", u"Check your original IP info at https://ipinfo.io/json and fill in the blank.", None))
 #endif // QT_CONFIG(tooltip)
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Connection Check", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Terminal", None))
         self.pushButton_switch.setText("")
         self.comboBox_connection_check.setItemText(0, QCoreApplication.translate("MainWindow", u"ip", None))
         self.comboBox_connection_check.setItemText(1, QCoreApplication.translate("MainWindow", u"city", None))
@@ -386,6 +392,5 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.lineEdit_connection_check.setToolTip(QCoreApplication.translate("MainWindow", u"Check your original IP info at https://ipinfo.io/json and fill in the blank.", None))
 #endif // QT_CONFIG(tooltip)
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Terminal", None))
     # retranslateUi
 
