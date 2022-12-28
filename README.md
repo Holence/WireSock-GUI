@@ -1,10 +1,43 @@
 # WireSock for Nord
 
-Some useful links:
+This is a GUI for using WireSock to connect NordVPN.
 
-- [Getting NordVPN WireGuard details](https://gist.github.com/bluewalk/7b3db071c488c82c604baf76a42eaad3)
-- [Spur](https://spur.us/context/me)
-- [How to use public NordVPN API – sleeplessbeastie's notes](https://sleeplessbeastie.eu/2019/02/18/how-to-use-public-nordvpn-api/)
+## Installation
+
+Download from [Github Release](https://github.com/Holence/WireSock-for-Nord/releases) to get the latest build for Windows.
+
+or build with pyinstaller on your own:
+
+`git clone https://github.com/Holence/WireSock-for-Nord.git`
+
+`python -m venv env_build`
+
+`.\env_build\Scripts\activate`
+
+`pip install -r .\requirements.txt`
+
+`pip install pyinstaller`
+
+(you can install [UPX](https://upx.github.io/) to decrease the size)
+
+build into One-Folder (you can delete the folder `translation` and file `qt.conf` in `./dist/WireSock for Nord/PySide2`, they are not needed):
+
+`pyinstaller .\full.spec`
+
+or build into single executable file:
+
+`pyinstaller .\single.spec`
+
+## Demo
+
+Here is a demo:
+
+![demo](demo/demo.png)
+
+## Reference
+
+- [WireSock – Advanced Network Security](https://www.wiresock.net/)
 - [NordVPN API v1](https://api.nordvpn.com/v1/servers) or [NordVPN API](https://api.nordvpn.com/server)
   - [Mirror Site](https://qfvi5yhkk86d38x.xyz/)
-- [WireSock – Advanced Network Security](https://www.wiresock.net/)
+- [Getting NordVPN WireGuard details](https://gist.github.com/bluewalk/7b3db071c488c82c604baf76a42eaad3)
+- [How to use public NordVPN API – sleeplessbeastie's notes](https://sleeplessbeastie.eu/2019/02/18/how-to-use-public-nordvpn-api/)
