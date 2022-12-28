@@ -33,6 +33,26 @@ class RollingThread(QThread):
         
         self.papa.updateStatus(info=info)
 
+class InfoThread(QThread):
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.papa=parent
+    
+    def run(self):
+        info=get_current_info('all')
+
+        if self.papa.status!=0:
+            if info=="Failed":
+                status_text=f"   Tunnel {self.papa.status_list[self.papa.status]}  | Failed   "
+            else:
+                status_text=f"   Tunnel {self.papa.status_list[self.papa.status]}  | {info['ip']}  |  {info['country']}, {info['region']}, {info['city']}  |  {info['loc']}  |  {info['org']}  |  {info['timezone']}   "
+        else:
+            status_text=f"   Tunnel {self.papa.status_list[self.papa.status]}"
+        
+        self.papa.Headquarter.setStatusTip(status_text)
+
+
 from Ui_MainWindow import Ui_MainWindow
 class MainWindow(Ui_MainWindow,QWidget):
 
@@ -235,19 +255,32 @@ DisallowedIPs =
         self.updateStatus()
     
     def updateStatus(self, info=None):
-        
+                
         if self.status!=0:
             if info==None:
-                info=get_current_info("all")
-        
-            if info=="Failed":
-                status_text=f"   Tunnel {self.status_list[self.status]}  | Failed   "
+                status_text=f"   Tunnel {self.status_list[self.status]}  | Updating Info...   "
+                self.Headquarter.setStatusTip(status_text)
+
+                try:
+                    self.info_thread
+                    if not self.info_thread.isRunning():
+                        self.info_thread = InfoThread(self)
+                        self.info_thread.start()
+                except:
+                    self.info_thread = InfoThread(self)
+                    self.info_thread.start()
+            
             else:
-                status_text=f"   Tunnel {self.status_list[self.status]}  | {info['ip']}  |  {info['country']}, {info['region']}, {info['city']}  |  {info['loc']}  |  {info['org']}  |  {info['timezone']}   "
+                if info=="Failed":
+                    status_text=f"   Tunnel {self.status_list[self.status]}  | Failed   "
+                else:
+                    status_text=f"   Tunnel {self.status_list[self.status]}  | {info['ip']}  |  {info['country']}, {info['region']}, {info['city']}  |  {info['loc']}  |  {info['org']}  |  {info['timezone']}   "
+                
+                self.Headquarter.setStatusTip(status_text)
         else:
             status_text=f"   Tunnel {self.status_list[self.status]}"
 
-        self.Headquarter.setStatusTip(status_text)
+            self.Headquarter.setStatusTip(status_text)
         
         if self.status==1:
 
