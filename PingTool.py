@@ -57,7 +57,7 @@ class PingTool(Ui_PingTool,QWidget):
         self.tableWidget_test.setObjectName("test")
         self.tableWidget_test.setColumn(["Name", "IP", "RTT", "Ratio"])
         self.tableWidget_test.setColumnHidden(4,True)
-        self.tableWidget_test.setColumnWidth(1,250)
+        self.tableWidget_test.setColumnWidth(1,150)
 
         self.pushButton_ping.clicked.connect(lambda: self.ping_test("all"))
         self.tableWidget_test.ping.connect(lambda: self.ping_test("selected"))

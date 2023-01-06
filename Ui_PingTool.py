@@ -19,7 +19,7 @@ class Ui_PingTool(object):
     def setupUi(self, PingTool):
         if not PingTool.objectName():
             PingTool.setObjectName(u"PingTool")
-        PingTool.resize(1044, 623)
+        PingTool.resize(944, 623)
         self.actionUpdate = QAction(PingTool)
         self.actionUpdate.setObjectName(u"actionUpdate")
         self.actionToggle_Connection = QAction(PingTool)
@@ -83,7 +83,7 @@ class Ui_PingTool(object):
 
         self.tableWidget_test = PingTable(self.layoutWidget1)
         self.tableWidget_test.setObjectName(u"tableWidget_test")
-        self.tableWidget_test.setMinimumSize(QSize(500, 500))
+        self.tableWidget_test.setMinimumSize(QSize(400, 500))
 
         self.verticalLayout_3.addWidget(self.tableWidget_test)
 

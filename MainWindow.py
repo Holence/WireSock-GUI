@@ -65,6 +65,8 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.status_list=["Disconnected","Connected","Connecting","Disconnecting"]
         self.rolllling=False
         self.status=0
+        self.wg_servers=[]
+        self.sock_servers=[]
 
         self.initializeWindow()
         self.initializeSignal()
@@ -350,7 +352,6 @@ DisallowedIPs =
 
 
     def updateWGServers(self):
-        self.wg_servers=[]
         self.comboBox_wg.clear()
         with open(self.wg_dir,"r") as f:
             for line in f.readlines():
@@ -484,7 +485,6 @@ DisallowedIPs =
         self.Headquarter.UserSetting().setValue("Socks/SocksPW",self.sock_pw)
 
     def updateSockServers(self):
-        self.sock_servers=[]
         self.comboBox_sock.clear()
         with open(self.sock_dir,"r") as f:
             for line in f.readlines():
