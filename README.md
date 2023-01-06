@@ -34,6 +34,10 @@ Here is a demo:
 
 ![demo](demo/demo.png)
 
+and a built-in ping tool
+
+![demo2](demo/demo2.jpg)
+
 ## Reference
 
 - [WireSock – Advanced Network Security](https://www.wiresock.net/)
