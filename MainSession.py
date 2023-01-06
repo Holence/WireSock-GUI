@@ -37,6 +37,7 @@ class MainSession(DTSession.DTMainSession):
     def initializeMenu(self):
         self.addActionToMainMenu(self.mainwindow.actionToggle_Connection)
         self.addActionToMainMenu(self.mainwindow.actionUpdate)
+        self.addActionToMainMenu(self.mainwindow.actionPing_Tool)
         
         self.addSeparatorToMainMenu()
         self.addMenuToMainMenu(self.menu_wireguard)
@@ -54,6 +55,11 @@ class MainSession(DTSession.DTMainSession):
         
         if self.mainwindow.status!=0:
             self.mainwindow.TunnelDisconnect(showmessage=False)
+        
+        try:
+            self.mainwindow.ping_tool_window.close()
+        except:
+            pass
         
         super().quit()
     

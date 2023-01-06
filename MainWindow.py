@@ -131,6 +131,9 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.action_log_level_list[self.comboBox_log.currentIndex()].setChecked(True)
         
         self.instance_exist.connect(self.TunnelDisconnect)
+
+        self.actionPing_Tool.triggered.connect(self.ping_tool)
+        self.actionPing_Tool.setIcon(IconFromCurrentTheme("activity.svg"))
     
     def initializeWindow(self):
         self.pushButton_switch.setFlat(True)
@@ -266,9 +269,11 @@ DisallowedIPs =
                     if not self.info_thread.isRunning():
                         self.info_thread = InfoThread(self)
                         self.info_thread.start()
+                        self.info_thread.finished.connect(self.info_thread.deleteLater)
                 except:
                     self.info_thread = InfoThread(self)
                     self.info_thread.start()
+                    self.info_thread.finished.connect(self.info_thread.deleteLater)
             
             else:
                 if info=="Failed":
@@ -685,6 +690,7 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
                     "Tunnel Connected",
                     DTIcon.Information()
                 )
+            self.rolling_thread.deleteLater()
 
         self.rolling_thread=RollingThread(self)
         self.rolling_thread.start()
@@ -707,3 +713,15 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
             else:
                 self.TunnelConnect()
     
+    def ping_tool(self):
+        def slot():
+            del self.ping_tool_window
+        
+        if hasattr(self,"ping_tool_window"):
+            ShowUp(self.ping_tool_window)
+            return
+        
+        from PingToolSession import PingToolSession
+        self.ping_tool_window=PingToolSession(self.Headquarter.app, self)
+        self.ping_tool_window.closed.connect(slot)
+        self.ping_tool_window.show()

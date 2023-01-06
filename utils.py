@@ -1,5 +1,6 @@
 from DTPySide import *
 import urllib3
+from pythonping import ping
 
 def get_current_info(key):
     try:
@@ -15,3 +16,16 @@ def get_current_info(key):
     except:
         value="Failed"
     return value
+
+def ping_ip(ip, count, timeout):
+    try:
+        res=ping(ip, count=count, timeout=timeout/1000)
+
+        if res.stats_success_ratio:
+            true_rtt_avg = (res.rtt_avg_ms*res.stats_packets_sent-res.stats_packets_lost*timeout)/res.stats_packets_sent
+        else:
+            true_rtt_avg = "inf"
+    
+        return true_rtt_avg, res.stats_success_ratio
+    except:
+        return "inf", -1

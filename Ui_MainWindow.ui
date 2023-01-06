@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>885</width>
+    <width>882</width>
     <height>459</height>
    </rect>
   </property>
@@ -547,6 +547,11 @@
   <action name="actionEnable_Socks5">
    <property name="text">
     <string>Enable Socks5</string>
+   </property>
+  </action>
+  <action name="actionPing_Tool">
+   <property name="text">
+    <string>Ping Tool</string>
    </property>
   </action>
  </widget>
