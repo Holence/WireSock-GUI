@@ -52,7 +52,7 @@
           </widget>
          </item>
          <item>
-          <widget class="PingTable" name="tableWidget_socks5">
+          <widget class="PingTable" name="tableWidget_socks">
            <property name="minimumSize">
             <size>
              <width>250</width>
@@ -183,27 +183,6 @@
     </widget>
    </item>
   </layout>
-  <action name="actionUpdate">
-   <property name="text">
-    <string>Update</string>
-   </property>
-   <property name="toolTip">
-    <string>Update</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+R</string>
-   </property>
-  </action>
-  <action name="actionToggle_Connection">
-   <property name="text">
-    <string>Toggle Connection</string>
-   </property>
-  </action>
-  <action name="actionEnable_Socks5">
-   <property name="text">
-    <string>Enable Socks5</string>
-   </property>
-  </action>
  </widget>
  <customwidgets>
   <customwidget>

@@ -48,11 +48,11 @@ class PingTool(Ui_PingTool,QWidget):
         self.tableWidget_wireguard.setColumnWidth(1,100)
         self.tableWidget_wireguard.sortReset.connect(self.loadWG)
     
-        self.tableWidget_socks5.setObjectName("sock")
-        self.tableWidget_socks5.setColumn(["Name", "IP"])
-        self.tableWidget_socks5.setColumnHidden(2,True)
-        self.tableWidget_socks5.setColumnWidth(1,100)
-        self.tableWidget_socks5.sortReset.connect(self.loadSocks)
+        self.tableWidget_socks.setObjectName("socks")
+        self.tableWidget_socks.setColumn(["Name", "IP"])
+        self.tableWidget_socks.setColumnHidden(2,True)
+        self.tableWidget_socks.setColumnWidth(1,100)
+        self.tableWidget_socks.sortReset.connect(self.loadSocks)
     
         self.tableWidget_test.setObjectName("test")
         self.tableWidget_test.setColumn(["Name", "IP", "RTT", "Ratio"])
@@ -76,10 +76,10 @@ class PingTool(Ui_PingTool,QWidget):
             row+=1
     
     def loadSocks(self):
-        self.tableWidget_socks5.Clear()
+        self.tableWidget_socks.Clear()
         row=0
-        for server in self.Headquarter.sock_servers:
-            self.tableWidget_socks5.addRow(row, [QTableWidgetItem(server["name"]), QTableWidgetItem(server["ip"][:server["ip"].index(":")])])
+        for server in self.Headquarter.socks_servers:
+            self.tableWidget_socks.addRow(row, [QTableWidgetItem(server["name"]), QTableWidgetItem(server["ip"][:server["ip"].index(":")])])
             row+=1
     
     def loadTest(self):

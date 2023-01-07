@@ -11,8 +11,8 @@ class MainSession(DTSession.DTMainSession):
 
         self.menu_wireguard=QMenu("WireGuard")
         self.menu_wireguard.setIcon(IconFromCurrentTheme("server.svg"))
-        self.menu_sock=QMenu("Socks5")
-        self.menu_sock.setIcon(IconFromCurrentTheme("umbrella.svg"))
+        self.menu_socks=QMenu("Socks5")
+        self.menu_socks.setIcon(IconFromCurrentTheme("umbrella.svg"))
         self.menu_log_level=QMenu("Log Level")
         self.menu_log_level.setIcon(IconFromCurrentTheme("file-text.svg"))
     
@@ -41,8 +41,8 @@ class MainSession(DTSession.DTMainSession):
         
         self.addSeparatorToMainMenu()
         self.addMenuToMainMenu(self.menu_wireguard)
-        self.addActionToMainMenu(self.mainwindow.actionEnable_Socks5)
-        self.addMenuToMainMenu(self.menu_sock)
+        self.addActionToMainMenu(self.mainwindow.actionEnable_Socks)
+        self.addMenuToMainMenu(self.menu_socks)
         self.addMenuToMainMenu(self.menu_log_level)
         self.addSeparatorToMainMenu()
         

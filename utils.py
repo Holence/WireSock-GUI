@@ -22,7 +22,7 @@ def ping_ip(ip, count, timeout):
         res=ping(ip, count=count, timeout=timeout/1000)
 
         if res.stats_success_ratio:
-            true_rtt_avg = (res.rtt_avg_ms*res.stats_packets_sent-res.stats_packets_lost*timeout)/res.stats_packets_sent
+            true_rtt_avg = (res.rtt_avg_ms*res.stats_packets_sent-res.stats_packets_lost*timeout)/res.stats_packets_returned
         else:
             true_rtt_avg = "inf"
     

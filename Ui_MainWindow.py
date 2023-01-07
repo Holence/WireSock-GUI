@@ -25,8 +25,8 @@ class Ui_MainWindow(object):
         self.actionUpdate.setObjectName(u"actionUpdate")
         self.actionToggle_Connection = QAction(MainWindow)
         self.actionToggle_Connection.setObjectName(u"actionToggle_Connection")
-        self.actionEnable_Socks5 = QAction(MainWindow)
-        self.actionEnable_Socks5.setObjectName(u"actionEnable_Socks5")
+        self.actionEnable_Socks = QAction(MainWindow)
+        self.actionEnable_Socks.setObjectName(u"actionEnable_Socks")
         self.actionPing_Tool = QAction(MainWindow)
         self.actionPing_Tool.setObjectName(u"actionPing_Tool")
         self.horizontalLayout = QHBoxLayout(MainWindow)
@@ -101,22 +101,22 @@ class Ui_MainWindow(object):
         self.gridLayout.addLayout(self.horizontalLayout_4, 0, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_wireguard, "")
-        self.tab_socks5 = QWidget()
-        self.tab_socks5.setObjectName(u"tab_socks5")
-        self.gridLayout_2 = QGridLayout(self.tab_socks5)
+        self.tab_socks = QWidget()
+        self.tab_socks.setObjectName(u"tab_socks")
+        self.gridLayout_2 = QGridLayout(self.tab_socks)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, -1)
-        self.label_13 = QLabel(self.tab_socks5)
+        self.label_13 = QLabel(self.tab_socks)
         self.label_13.setObjectName(u"label_13")
 
         self.gridLayout_2.addWidget(self.label_13, 3, 0, 1, 1)
 
-        self.comboBox_sock = QComboBox(self.tab_socks5)
-        self.comboBox_sock.setObjectName(u"comboBox_sock")
+        self.comboBox_socks = QComboBox(self.tab_socks)
+        self.comboBox_socks.setObjectName(u"comboBox_socks")
 
-        self.gridLayout_2.addWidget(self.comboBox_sock, 10, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.comboBox_socks, 10, 0, 1, 1)
 
-        self.comboBox_nordapi = QComboBox(self.tab_socks5)
+        self.comboBox_nordapi = QComboBox(self.tab_socks)
         self.comboBox_nordapi.addItem("")
         self.comboBox_nordapi.addItem("")
         self.comboBox_nordapi.addItem("")
@@ -133,67 +133,67 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.comboBox_nordapi, 4, 0, 1, 1)
 
-        self.pushButton_sock_file = DTApplyButton(self.tab_socks5)
-        self.pushButton_sock_file.setObjectName(u"pushButton_sock_file")
+        self.pushButton_socks_file = DTApplyButton(self.tab_socks)
+        self.pushButton_socks_file.setObjectName(u"pushButton_socks_file")
 
-        self.gridLayout_2.addWidget(self.pushButton_sock_file, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_socks_file, 2, 1, 1, 1)
 
-        self.pushButton_getsock = DTApplyButton(self.tab_socks5)
-        self.pushButton_getsock.setObjectName(u"pushButton_getsock")
+        self.pushButton_getsocks = DTApplyButton(self.tab_socks)
+        self.pushButton_getsocks.setObjectName(u"pushButton_getsocks")
 
-        self.gridLayout_2.addWidget(self.pushButton_getsock, 4, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_getsocks, 4, 1, 1, 1)
 
-        self.label_3 = QLabel(self.tab_socks5)
+        self.label_3 = QLabel(self.tab_socks)
         self.label_3.setObjectName(u"label_3")
 
         self.gridLayout_2.addWidget(self.label_3, 5, 0, 1, 1)
 
-        self.lineEdit_sock_file = QLineEdit(self.tab_socks5)
-        self.lineEdit_sock_file.setObjectName(u"lineEdit_sock_file")
-        self.lineEdit_sock_file.setReadOnly(True)
+        self.lineEdit_socks_file = QLineEdit(self.tab_socks)
+        self.lineEdit_socks_file.setObjectName(u"lineEdit_socks_file")
+        self.lineEdit_socks_file.setReadOnly(True)
 
-        self.gridLayout_2.addWidget(self.lineEdit_sock_file, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.lineEdit_socks_file, 2, 0, 1, 1)
 
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.gridLayout_2.addItem(self.verticalSpacer_3, 11, 0, 1, 1)
 
-        self.label_7 = QLabel(self.tab_socks5)
+        self.label_7 = QLabel(self.tab_socks)
         self.label_7.setObjectName(u"label_7")
 
         self.gridLayout_2.addWidget(self.label_7, 9, 0, 1, 1)
 
-        self.checkBox_socks5 = QCheckBox(self.tab_socks5)
-        self.checkBox_socks5.setObjectName(u"checkBox_socks5")
+        self.checkBox_socks = QCheckBox(self.tab_socks)
+        self.checkBox_socks.setObjectName(u"checkBox_socks")
 
-        self.gridLayout_2.addWidget(self.checkBox_socks5, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.checkBox_socks, 0, 0, 1, 1)
 
-        self.label_5 = QLabel(self.tab_socks5)
+        self.label_5 = QLabel(self.tab_socks)
         self.label_5.setObjectName(u"label_5")
 
         self.gridLayout_2.addWidget(self.label_5, 7, 0, 1, 1)
 
-        self.lineEdit_sock_pw = QLineEdit(self.tab_socks5)
-        self.lineEdit_sock_pw.setObjectName(u"lineEdit_sock_pw")
+        self.lineEdit_socks_pw = QLineEdit(self.tab_socks)
+        self.lineEdit_socks_pw.setObjectName(u"lineEdit_socks_pw")
 
-        self.gridLayout_2.addWidget(self.lineEdit_sock_pw, 8, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.lineEdit_socks_pw, 8, 0, 1, 1)
 
-        self.lineEdit_sock_un = QLineEdit(self.tab_socks5)
-        self.lineEdit_sock_un.setObjectName(u"lineEdit_sock_un")
+        self.lineEdit_socks_un = QLineEdit(self.tab_socks)
+        self.lineEdit_socks_un.setObjectName(u"lineEdit_socks_un")
 
-        self.gridLayout_2.addWidget(self.lineEdit_sock_un, 6, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.lineEdit_socks_un, 6, 0, 1, 1)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.label_6 = QLabel(self.tab_socks5)
+        self.label_6 = QLabel(self.tab_socks)
         self.label_6.setObjectName(u"label_6")
 
         self.horizontalLayout_3.addWidget(self.label_6)
 
-        self.pushButton_opensock = QPushButton(self.tab_socks5)
-        self.pushButton_opensock.setObjectName(u"pushButton_opensock")
+        self.pushButton_opensocks = QPushButton(self.tab_socks)
+        self.pushButton_opensocks.setObjectName(u"pushButton_opensocks")
 
-        self.horizontalLayout_3.addWidget(self.pushButton_opensock)
+        self.horizontalLayout_3.addWidget(self.pushButton_opensocks)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -202,7 +202,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addLayout(self.horizontalLayout_3, 1, 0, 1, 1)
 
-        self.tabWidget.addTab(self.tab_socks5, "")
+        self.tabWidget.addTab(self.tab_socks, "")
         self.tab_wiresock = QWidget()
         self.tab_wiresock.setObjectName(u"tab_wiresock")
         self.verticalLayout_2 = QVBoxLayout(self.tab_wiresock)
@@ -336,7 +336,7 @@ class Ui_MainWindow(object):
         self.actionUpdate.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+R", None))
 #endif // QT_CONFIG(shortcut)
         self.actionToggle_Connection.setText(QCoreApplication.translate("MainWindow", u"Toggle Connection", None))
-        self.actionEnable_Socks5.setText(QCoreApplication.translate("MainWindow", u"Enable Socks5", None))
+        self.actionEnable_Socks.setText(QCoreApplication.translate("MainWindow", u"Socks5 Enable", None))
         self.actionPing_Tool.setText(QCoreApplication.translate("MainWindow", u"Ping Tool", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"WireGuard Private Key", None))
         self.pushButton_wg_file.setText("")
@@ -358,15 +358,15 @@ class Ui_MainWindow(object):
         self.comboBox_nordapi.setItemText(10, QCoreApplication.translate("MainWindow", u"https://njtzzrvg0lwj3bsn.info", None))
         self.comboBox_nordapi.setItemText(11, QCoreApplication.translate("MainWindow", u"https://mzhlhrfr8z.info", None))
 
-        self.pushButton_sock_file.setText("")
-        self.pushButton_getsock.setText("")
+        self.pushButton_socks_file.setText("")
+        self.pushButton_getsocks.setText("")
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Socks5 Username", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Socks5 Server", None))
-        self.checkBox_socks5.setText(QCoreApplication.translate("MainWindow", u"Enable Socks5", None))
+        self.checkBox_socks.setText(QCoreApplication.translate("MainWindow", u"Enable Socks5", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Socks5 Password", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Socks5 List File", None))
-        self.pushButton_opensock.setText("")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_socks5), QCoreApplication.translate("MainWindow", u"Socks5", None))
+        self.pushButton_opensocks.setText("")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_socks), QCoreApplication.translate("MainWindow", u"Socks5", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Log Level", None))
         self.comboBox_log.setItemText(0, QCoreApplication.translate("MainWindow", u"none", None))
         self.comboBox_log.setItemText(1, QCoreApplication.translate("MainWindow", u"debug", None))

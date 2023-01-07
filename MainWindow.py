@@ -66,7 +66,7 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.rolllling=False
         self.status=0
         self.wg_servers=[]
-        self.sock_servers=[]
+        self.socks_servers=[]
 
         self.initializeWindow()
         self.initializeSignal()
@@ -101,14 +101,14 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.lineEdit_wg_private_key.textEdited.connect(self.setWGPriKey)
         self.comboBox_wg.activated.connect(self.setWGServer)
 
-        self.checkBox_socks5.stateChanged.connect(lambda :self.setSockEnable(self.checkBox_socks5.isChecked()))
-        self.pushButton_sock_file.clicked.connect(self.setSockDir)
-        self.pushButton_opensock.clicked.connect(self.openSock)
-        self.pushButton_getsock.clicked.connect(self.getSock)
+        self.checkBox_socks.stateChanged.connect(lambda :self.setSocksEnable(self.checkBox_socks.isChecked()))
+        self.pushButton_socks_file.clicked.connect(self.setSocksDir)
+        self.pushButton_opensocks.clicked.connect(self.openSocks)
+        self.pushButton_getsocks.clicked.connect(self.getSocks)
         self.comboBox_nordapi.activated.connect(lambda :self.Headquarter.UserSetting().setValue("Socks/SocksAPI", self.comboBox_nordapi.currentIndex()))
-        self.lineEdit_sock_un.textEdited.connect(self.setSockUN)
-        self.lineEdit_sock_pw.textEdited.connect(self.setSockPW)
-        self.comboBox_sock.activated.connect(self.setSockServer)
+        self.lineEdit_socks_un.textEdited.connect(self.setSocksUN)
+        self.lineEdit_socks_pw.textEdited.connect(self.setSocksPW)
+        self.comboBox_socks.activated.connect(self.setSocksServer)
 
         self.comboBox_log.activated.connect(self.setLogLevel)
         self.comboBox_connection_check.activated.connect(self.setConnectionCkeckKey)
@@ -122,7 +122,7 @@ class MainWindow(Ui_MainWindow,QWidget):
         
         self.actionToggle_Connection.triggered.connect(self.Switch)
         
-        self.actionEnable_Socks5.triggered.connect(lambda : self.setSockEnable( not self.sock_enable))
+        self.actionEnable_Socks.triggered.connect(lambda : self.setSocksEnable( not self.socks_enable))
 
         self.action_log_level_list=[]
         for index, text  in enumerate(["none","debug","all"]):
@@ -154,12 +154,12 @@ DisallowedApps = TIM
 AllowedIPs = 
 DisallowedIPs = 
 """)
-        self.pushButton_getsock.setIcon(IconFromCurrentTheme("download-cloud.svg"))
+        self.pushButton_getsocks.setIcon(IconFromCurrentTheme("download-cloud.svg"))
 
         self.pushButton_openwg.setStyleSheet("QPushButton{ min-height:16px; max-height:16px; min-width:16px; max-width:16px; icon-size:12px; }")
         self.pushButton_openwg.setIcon(IconFromCurrentTheme("external-link.svg"))
-        self.pushButton_opensock.setStyleSheet("QPushButton{ min-height:16px; max-height:16px; min-width:16px; max-width:16px; icon-size:12px; }")
-        self.pushButton_opensock.setIcon(IconFromCurrentTheme("external-link.svg"))
+        self.pushButton_opensocks.setStyleSheet("QPushButton{ min-height:16px; max-height:16px; min-width:16px; max-width:16px; icon-size:12px; }")
+        self.pushButton_opensocks.setIcon(IconFromCurrentTheme("external-link.svg"))
 
         ##########################################################
 
@@ -185,40 +185,40 @@ DisallowedIPs =
 
         ##########################################################
 
-        self.sock_enable=self.Headquarter.UserSetting().value("Socks/SocksEnable")
-        if self.sock_enable=="true":
-            self.sock_enable=True
+        self.socks_enable=self.Headquarter.UserSetting().value("Socks/SocksEnable")
+        if self.socks_enable=="true":
+            self.socks_enable=True
         else:
-            self.sock_enable=False
-        self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.sock_enable)
-        self.checkBox_socks5.setChecked(self.sock_enable)
-        self.setSockEnable(self.sock_enable)
+            self.socks_enable=False
+        self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.socks_enable)
+        self.checkBox_socks.setChecked(self.socks_enable)
+        self.setSocksEnable(self.socks_enable)
         
-        self.sock_dir=self.Headquarter.UserSetting().value("Socks/SocksDir")
-        self.lineEdit_sock_file.setText(self.sock_dir)
+        self.socks_dir=self.Headquarter.UserSetting().value("Socks/SocksDir")
+        self.lineEdit_socks_file.setText(self.socks_dir)
 
-        sockapi=self.Headquarter.UserSetting().value("Socks/SocksAPI")
-        if not sockapi:
-            sockapi=0
-            self.Headquarter.UserSetting().setValue("Socks/SocksAPI",sockapi)
-        self.comboBox_nordapi.setCurrentIndex(int(sockapi))
+        socks_api=self.Headquarter.UserSetting().value("Socks/SocksAPI")
+        if not socks_api:
+            socks_api=0
+            self.Headquarter.UserSetting().setValue("Socks/SocksAPI",socks_api)
+        self.comboBox_nordapi.setCurrentIndex(int(socks_api))
         
-        self.sock_un=self.Headquarter.UserSetting().value("Socks/SocksUN")
-        self.lineEdit_sock_un.setText(self.sock_un)
+        self.socks_un=self.Headquarter.UserSetting().value("Socks/SocksUN")
+        self.lineEdit_socks_un.setText(self.socks_un)
         
-        self.sock_pw=self.Headquarter.UserSetting().value("Socks/SocksPW")
-        self.lineEdit_sock_pw.setText(self.sock_pw)
+        self.socks_pw=self.Headquarter.UserSetting().value("Socks/SocksPW")
+        self.lineEdit_socks_pw.setText(self.socks_pw)
 
-        self.current_sock_index=self.Headquarter.UserSetting().value("Socks/SocksIndex")
-        if self.current_sock_index==None:
-            self.current_sock_index=-1
-            self.Headquarter.UserSetting().setValue("Socks/SocksIndex",self.current_sock_index)
+        self.current_socks_index=self.Headquarter.UserSetting().value("Socks/SocksIndex")
+        if self.current_socks_index==None:
+            self.current_socks_index=-1
+            self.Headquarter.UserSetting().setValue("Socks/SocksIndex",self.current_socks_index)
         else:
-            self.current_sock_index=int(self.current_sock_index)
-        self.comboBox_sock.setCurrentIndex(self.current_sock_index)
+            self.current_socks_index=int(self.current_socks_index)
+        self.comboBox_socks.setCurrentIndex(self.current_socks_index)
         
-        if self.sock_dir:
-            self.updateSockServers()
+        if self.socks_dir:
+            self.updateSocksServers()
         
         ##########################################################
 
@@ -253,7 +253,7 @@ DisallowedIPs =
         except:
             pass
         try:
-            self.updateSockServers()
+            self.updateSocksServers()
         except:
             pass
         
@@ -352,6 +352,7 @@ DisallowedIPs =
 
 
     def updateWGServers(self):
+        self.wg_servers=[]
         self.comboBox_wg.clear()
         with open(self.wg_dir,"r") as f:
             for line in f.readlines():
@@ -406,50 +407,50 @@ DisallowedIPs =
 
     ########################################################################
     
-    def setSockEnable(self, enable):
-        self.sock_enable=enable
-        self.checkBox_socks5.setChecked(self.sock_enable)
-        self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.sock_enable)
-        self.pushButton_sock_file.setEnabled(self.sock_enable)
-        self.comboBox_nordapi.setEnabled(self.sock_enable)
-        self.pushButton_getsock.setEnabled(self.sock_enable)
-        self.lineEdit_sock_un.setEnabled(self.sock_enable)
-        self.lineEdit_sock_pw.setEnabled(self.sock_enable)
-        self.comboBox_sock.setEnabled(self.sock_enable)
+    def setSocksEnable(self, enable):
+        self.socks_enable=enable
+        self.checkBox_socks.setChecked(self.socks_enable)
+        self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.socks_enable)
+        self.pushButton_socks_file.setEnabled(self.socks_enable)
+        self.comboBox_nordapi.setEnabled(self.socks_enable)
+        self.pushButton_getsocks.setEnabled(self.socks_enable)
+        self.lineEdit_socks_un.setEnabled(self.socks_enable)
+        self.lineEdit_socks_pw.setEnabled(self.socks_enable)
+        self.comboBox_socks.setEnabled(self.socks_enable)
 
-        self.Headquarter.menu_sock.setEnabled(self.sock_enable)
-        if self.sock_enable:
-            self.actionEnable_Socks5.setText("Socks5 Enabled")
-            self.actionEnable_Socks5.setIcon(IconFromCurrentTheme("toggle-right.svg"))
+        self.Headquarter.menu_socks.setEnabled(self.socks_enable)
+        if self.socks_enable:
+            self.actionEnable_Socks.setText("Socks5 Enabled")
+            self.actionEnable_Socks.setIcon(IconFromCurrentTheme("toggle-right.svg"))
         else:
-            self.actionEnable_Socks5.setText("Socks5 Disabled")
-            self.actionEnable_Socks5.setIcon(IconFromCurrentTheme("toggle-left.svg"))
+            self.actionEnable_Socks.setText("Socks5 Disabled")
+            self.actionEnable_Socks.setIcon(IconFromCurrentTheme("toggle-left.svg"))
 
-    def setSockDir(self):
+    def setSocksDir(self):
         dir_dlg=QFileDialog(self,"Select Socks5 Servers List File Directory")
         dir=dir_dlg.getOpenFileUrl(filter="Text files (*.txt);;")
 
         if not dir[0].isEmpty():
             dir=dir[0].toString()[8:]
             dir=dir.replace("/","\\")
-            self.sock_dir=dir
-            self.lineEdit_sock_file.setText(self.sock_dir)
-            self.Headquarter.UserSetting().setValue("Socks/SocksDir",self.sock_dir)
+            self.socks_dir=dir
+            self.lineEdit_socks_file.setText(self.socks_dir)
+            self.Headquarter.UserSetting().setValue("Socks/SocksDir",self.socks_dir)
 
-            self.updateSockServers()
+            self.updateSocksServers()
 
-    def openSock(self):
-        if not self.sock_dir:
+    def openSocks(self):
+        if not self.socks_dir:
             DTFrame.DTMessageBox(self,"Warning","Please select Socks5 Servers List File first!",DTIcon.Warning())
             return
         
         try:
-            os.startfile(self.sock_dir)
+            os.startfile(self.socks_dir)
         except Exception as e:
             DTFrame.DTMessageBox(self,"Error",str(e),DTIcon.Error())
     
-    def getSock(self):
-        if not self.sock_dir:
+    def getSocks(self):
+        if not self.socks_dir:
             DTFrame.DTMessageBox(self,"Warning","Please select Socks5 Servers List File first!",DTIcon.Warning())
             return
         
@@ -460,33 +461,34 @@ DisallowedIPs =
             text=r.data.decode("utf-8")
             servers = json.loads(text)
 
-            socks5_list=[]
+            socks_list=[]
             for i in servers:
                 if "socks" in i["hostname"]:
-                    socks5_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
-            socks5_list.sort(key=lambda x:x[-1])
+                    socks_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
+            socks_list.sort(key=lambda x:x[-1])
 
-            with open(self.sock_dir,"w") as f:
-                for i in socks5_list:
+            with open(self.socks_dir,"w") as f:
+                for i in socks_list:
                     f.write("%s,\t\t%s\t\t;%s\n"%(i[0],i[1],i[2]))
         
-            self.updateSockServers()
+            self.updateSocksServers()
             DTFrame.DTMessageBox(self,"Information","Success",DTIcon.Happy())
 
         except Exception as e:
             DTFrame.DTMessageBox(self,"Error",str(e),DTIcon.Error())
     
-    def setSockUN(self,un):
-        self.sock_un=un
-        self.Headquarter.UserSetting().setValue("Socks/SocksUN",self.sock_un)
+    def setSocksUN(self,un):
+        self.socks_un=un
+        self.Headquarter.UserSetting().setValue("Socks/SocksUN",self.socks_un)
 
-    def setSockPW(self,pw):
-        self.sock_pw=pw
-        self.Headquarter.UserSetting().setValue("Socks/SocksPW",self.sock_pw)
+    def setSocksPW(self,pw):
+        self.socks_pw=pw
+        self.Headquarter.UserSetting().setValue("Socks/SocksPW",self.socks_pw)
 
-    def updateSockServers(self):
-        self.comboBox_sock.clear()
-        with open(self.sock_dir,"r") as f:
+    def updateSocksServers(self):
+        self.socks_servers=[]
+        self.comboBox_socks.clear()
+        with open(self.socks_dir,"r") as f:
             for line in f.readlines():
                 try:
                     comment=""
@@ -494,42 +496,42 @@ DisallowedIPs =
                         line,comment=line.strip().split(";")
                     
                     name,ip=map(str.strip,line.split(","))
-                    self.sock_servers.append({
+                    self.socks_servers.append({
                         "name": name,
                         "ip": ip
                     })
                     if not comment:
-                        self.comboBox_sock.addItem(name+" - "+ip)
+                        self.comboBox_socks.addItem(name+" - "+ip)
                     else:
-                        self.comboBox_sock.addItem(name+" - "+ip+" - "+comment)
+                        self.comboBox_socks.addItem(name+" - "+ip+" - "+comment)
                 except:
                     pass
         
-        self.action_Sock_list=[]
-        for index in range(self.comboBox_sock.count()):
-            text=self.comboBox_sock.itemText(index)
+        self.action_Socks_list=[]
+        for index in range(self.comboBox_socks.count()):
+            text=self.comboBox_socks.itemText(index)
             action=QAction(text,checkable=True)
-            action.triggered.connect( partial(self.setSockServer,index) )
-            self.action_Sock_list.append(action)
-        self.action_Sock_list[self.comboBox_sock.currentIndex()].setChecked(True)
+            action.triggered.connect( partial(self.setSocksServer,index) )
+            self.action_Socks_list.append(action)
+        self.action_Socks_list[self.comboBox_socks.currentIndex()].setChecked(True)
 
-        self.Headquarter.menu_sock.clear()
-        for action in self.action_Sock_list:
-            self.Headquarter.menu_sock.addAction(action)
+        self.Headquarter.menu_socks.clear()
+        for action in self.action_Socks_list:
+            self.Headquarter.menu_socks.addAction(action)
         
-        if self.current_sock_index==-1 or self.comboBox_sock.count()-1<self.current_sock_index:
-            self.current_sock_index=0
-        self.setSockServer(self.current_sock_index)
+        if self.current_socks_index==-1 or self.comboBox_socks.count()-1<self.current_socks_index:
+            self.current_socks_index=0
+        self.setSocksServer(self.current_socks_index)
 
-    def setSockServer(self,index):
-        self.current_sock_index=index
-        self.Headquarter.UserSetting().setValue("Socks/SocksIndex",self.current_sock_index)
+    def setSocksServer(self,index):
+        self.current_socks_index=index
+        self.Headquarter.UserSetting().setValue("Socks/SocksIndex",self.current_socks_index)
 
-        self.comboBox_sock.setCurrentIndex(index)
-        self.action_Sock_list[index].setChecked(True)
-        for i in range(len(self.action_Sock_list)):
+        self.comboBox_socks.setCurrentIndex(index)
+        self.action_Socks_list[index].setChecked(True)
+        for i in range(len(self.action_Socks_list)):
             if i!=index:
-                self.action_Sock_list[i].setChecked(False)
+                self.action_Socks_list[i].setChecked(False)
     
     ########################################################################
 
@@ -593,16 +595,16 @@ DisallowedIPs =
         self.comboBox_wg.setEnabled(True)
         self.Headquarter.menu_wireguard.setEnabled(True)
         
-        self.checkBox_socks5.setEnabled(True)
-        self.actionEnable_Socks5.setEnabled(True)
-        if self.sock_enable:
-            self.pushButton_sock_file.setEnabled(True)
+        self.checkBox_socks.setEnabled(True)
+        self.actionEnable_Socks.setEnabled(True)
+        if self.socks_enable:
+            self.pushButton_socks_file.setEnabled(True)
             self.comboBox_nordapi.setEnabled(True)
-            self.pushButton_getsock.setEnabled(True)
-            self.lineEdit_sock_un.setEnabled(True)
-            self.lineEdit_sock_pw.setEnabled(True)
-            self.comboBox_sock.setEnabled(True)
-            self.Headquarter.menu_sock.setEnabled(True)
+            self.pushButton_getsocks.setEnabled(True)
+            self.lineEdit_socks_un.setEnabled(True)
+            self.lineEdit_socks_pw.setEnabled(True)
+            self.comboBox_socks.setEnabled(True)
+            self.Headquarter.menu_socks.setEnabled(True)
 
         self.comboBox_log.setEnabled(True)
         self.Headquarter.menu_log_level.setEnabled(True)
@@ -623,23 +625,23 @@ DisallowedIPs =
                 DTIcon.Information()
             )
     
-    def TunnelConnect(self, showmessage=True):
+    def TunnelConnect(self):
 
         self.pushButton_wg_file.setEnabled(False)
         self.lineEdit_wg_private_key.setEnabled(False)
         self.comboBox_wg.setEnabled(False)
         self.Headquarter.menu_wireguard.setEnabled(False)
 
-        self.checkBox_socks5.setEnabled(False)
-        self.actionEnable_Socks5.setEnabled(False)
-        if self.sock_enable:
-            self.pushButton_sock_file.setEnabled(False)
+        self.checkBox_socks.setEnabled(False)
+        self.actionEnable_Socks.setEnabled(False)
+        if self.socks_enable:
+            self.pushButton_socks_file.setEnabled(False)
             self.comboBox_nordapi.setEnabled(False)
-            self.pushButton_getsock.setEnabled(False)
-            self.lineEdit_sock_un.setEnabled(False)
-            self.lineEdit_sock_pw.setEnabled(False)
-            self.comboBox_sock.setEnabled(False)
-            self.Headquarter.menu_sock.setEnabled(False)
+            self.pushButton_getsocks.setEnabled(False)
+            self.lineEdit_socks_un.setEnabled(False)
+            self.lineEdit_socks_pw.setEnabled(False)
+            self.comboBox_socks.setEnabled(False)
+            self.Headquarter.menu_socks.setEnabled(False)
 
         self.comboBox_log.setEnabled(False)
         self.Headquarter.menu_log_level.setEnabled(False)
@@ -659,13 +661,12 @@ DNS = 103.86.99.98, 103.86.96.98
 PublicKey = {self.wg_servers[self.current_wg_index]["pubkey"]}
 AllowedIPs = 0.0.0.0/0
 Endpoint = {self.wg_servers[self.current_wg_index]["ip"]}:51820
-{self.plainTextEdit_extra_conf.toPlainText()}
-""")
-            if self.sock_enable:
+{self.plainTextEdit_extra_conf.toPlainText()}""")
+            if self.socks_enable:
                 f.write(f"""
-Socks5ProxyUsername = {self.sock_un}
-Socks5ProxyPassword = {self.sock_pw}
-Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
+Socks5ProxyUsername = {self.socks_un}
+Socks5ProxyPassword = {self.socks_pw}
+Socks5Proxy = {self.socks_servers[self.current_socks_index]["ip"]}
 """)
 
         self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon/icon-wait.ico")))
@@ -673,14 +674,14 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
         self.plainTextEdit.clear()
 
         self.plainTextEdit.appendPlainText("Connecting to WireGuard Server %s: %s"%(self.wg_servers[self.current_wg_index]["name"],self.wg_servers[self.current_wg_index]["ip"]))
-        if self.sock_enable:
-            self.plainTextEdit.appendPlainText("Using Socks5 Server %s: %s"%(self.sock_servers[self.current_sock_index]["name"],self.sock_servers[self.current_sock_index]["ip"]))
+        if self.socks_enable:
+            self.plainTextEdit.appendPlainText("Using Socks5 Server %s: %s"%(self.socks_servers[self.current_socks_index]["name"],self.socks_servers[self.current_socks_index]["ip"]))
         self.plainTextEdit.appendPlainText("\nwiresock-client.exe run -log-level %s -config temp.conf %s\n"%(self.log_level, self.lineEdit_extra_CMD.text()))
         self.plainTextEdit.appendPlainText("WireSock LightWeight WireGuard VPN Client is running as a regular process.")
         
         self.process.start("ipconfig.exe", ["/flushdns"])
         self.process.waitForFinished()
-        self.process.start("wiresock-client.exe", ["run","-log-level" ,self.log_level, "-config", "temp.conf", self.lineEdit_extra_CMD.text()])
+        self.process.start("wiresock-client.exe", ["run", "-log-level", self.log_level, "-config", "temp.conf", self.lineEdit_extra_CMD.text()])
         self.status=2
 
         def slot():
@@ -703,8 +704,8 @@ Socks5Proxy = {self.sock_servers[self.current_sock_index]["ip"]}
             if self.lineEdit_wg_private_key.text()=="" or self.comboBox_wg.currentIndex()==-1:
                 DTFrame.DTMessageBox(self,"Warning","WireGuard info incomplete!",DTIcon.Warning())
                 return
-            if self.sock_enable:
-                if self.lineEdit_sock_un.text()=="" or self.lineEdit_sock_pw.text()=="" or self.comboBox_sock.currentIndex()==-1:
+            if self.socks_enable:
+                if self.lineEdit_socks_un.text()=="" or self.lineEdit_socks_pw.text()=="" or self.comboBox_socks.currentIndex()==-1:
                     DTFrame.DTMessageBox(self,"Warning","Socks5 info incomplete!",DTIcon.Warning())
                     return
             if self.lineEdit_connection_check.text()=="":

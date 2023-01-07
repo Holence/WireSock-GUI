@@ -20,12 +20,6 @@ class Ui_PingTool(object):
         if not PingTool.objectName():
             PingTool.setObjectName(u"PingTool")
         PingTool.resize(944, 623)
-        self.actionUpdate = QAction(PingTool)
-        self.actionUpdate.setObjectName(u"actionUpdate")
-        self.actionToggle_Connection = QAction(PingTool)
-        self.actionToggle_Connection.setObjectName(u"actionToggle_Connection")
-        self.actionEnable_Socks5 = QAction(PingTool)
-        self.actionEnable_Socks5.setObjectName(u"actionEnable_Socks5")
         self.horizontalLayout = QHBoxLayout(PingTool)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.splitter = QSplitter(PingTool)
@@ -59,11 +53,11 @@ class Ui_PingTool(object):
 
         self.verticalLayout_2.addWidget(self.label_2)
 
-        self.tableWidget_socks5 = PingTable(self.layoutWidget)
-        self.tableWidget_socks5.setObjectName(u"tableWidget_socks5")
-        self.tableWidget_socks5.setMinimumSize(QSize(250, 0))
+        self.tableWidget_socks = PingTable(self.layoutWidget)
+        self.tableWidget_socks.setObjectName(u"tableWidget_socks")
+        self.tableWidget_socks.setMinimumSize(QSize(250, 0))
 
-        self.verticalLayout_2.addWidget(self.tableWidget_socks5)
+        self.verticalLayout_2.addWidget(self.tableWidget_socks)
 
 
         self.verticalLayout_4.addLayout(self.verticalLayout_2)
@@ -164,15 +158,6 @@ class Ui_PingTool(object):
 
     def retranslateUi(self, PingTool):
         PingTool.setWindowTitle(QCoreApplication.translate("PingTool", u"Form", None))
-        self.actionUpdate.setText(QCoreApplication.translate("PingTool", u"Update", None))
-#if QT_CONFIG(tooltip)
-        self.actionUpdate.setToolTip(QCoreApplication.translate("PingTool", u"Update", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(shortcut)
-        self.actionUpdate.setShortcut(QCoreApplication.translate("PingTool", u"Ctrl+R", None))
-#endif // QT_CONFIG(shortcut)
-        self.actionToggle_Connection.setText(QCoreApplication.translate("PingTool", u"Toggle Connection", None))
-        self.actionEnable_Socks5.setText(QCoreApplication.translate("PingTool", u"Enable Socks5", None))
         self.label.setText(QCoreApplication.translate("PingTool", u"WireGuard Severs", None))
         self.label_2.setText(QCoreApplication.translate("PingTool", u"Socks5 Severs", None))
         self.label_3.setText(QCoreApplication.translate("PingTool", u"Test Severs", None))
