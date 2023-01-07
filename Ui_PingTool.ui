@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>944</width>
+    <width>1024</width>
     <height>623</height>
    </rect>
   </property>
@@ -15,55 +15,56 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="splitter_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>WireGuard Severs</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="PingTable" name="tableWidget_wireguard">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Socks5 Severs</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="PingTable" name="tableWidget_socks">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>WireGuard Severs</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="PingTable" name="tableWidget_wireguard">
+          <property name="minimumSize">
+           <size>
+            <width>266</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget3">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Socks5 Severs</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="PingTable" name="tableWidget_socks">
+          <property name="minimumSize">
+           <size>
+            <width>266</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QWidget" name="layoutWidget1">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -80,7 +81,7 @@
           <widget class="PingTable" name="tableWidget_test">
            <property name="minimumSize">
             <size>
-             <width>400</width>
+             <width>466</width>
              <height>500</height>
             </size>
            </property>

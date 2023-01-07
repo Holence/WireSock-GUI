@@ -19,19 +19,20 @@ class Ui_PingTool(object):
     def setupUi(self, PingTool):
         if not PingTool.objectName():
             PingTool.setObjectName(u"PingTool")
-        PingTool.resize(944, 623)
+        PingTool.resize(1024, 623)
         self.horizontalLayout = QHBoxLayout(PingTool)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.splitter = QSplitter(PingTool)
+        self.splitter_2 = QSplitter(PingTool)
+        self.splitter_2.setObjectName(u"splitter_2")
+        self.splitter_2.setOrientation(Qt.Horizontal)
+        self.splitter = QSplitter(self.splitter_2)
         self.splitter.setObjectName(u"splitter")
-        self.splitter.setOrientation(Qt.Horizontal)
+        self.splitter.setOrientation(Qt.Vertical)
         self.layoutWidget = QWidget(self.splitter)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.verticalLayout_4 = QVBoxLayout(self.layoutWidget)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout = QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(self.layoutWidget)
         self.label.setObjectName(u"label")
 
@@ -39,31 +40,30 @@ class Ui_PingTool(object):
 
         self.tableWidget_wireguard = PingTable(self.layoutWidget)
         self.tableWidget_wireguard.setObjectName(u"tableWidget_wireguard")
-        self.tableWidget_wireguard.setMinimumSize(QSize(250, 0))
+        self.tableWidget_wireguard.setMinimumSize(QSize(266, 200))
 
         self.verticalLayout.addWidget(self.tableWidget_wireguard)
 
-
-        self.verticalLayout_4.addLayout(self.verticalLayout)
-
-        self.verticalLayout_2 = QVBoxLayout()
+        self.splitter.addWidget(self.layoutWidget)
+        self.layoutWidget3 = QWidget(self.splitter)
+        self.layoutWidget3.setObjectName(u"layoutWidget3")
+        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget3)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.label_2 = QLabel(self.layoutWidget)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.label_2 = QLabel(self.layoutWidget3)
         self.label_2.setObjectName(u"label_2")
 
         self.verticalLayout_2.addWidget(self.label_2)
 
-        self.tableWidget_socks = PingTable(self.layoutWidget)
+        self.tableWidget_socks = PingTable(self.layoutWidget3)
         self.tableWidget_socks.setObjectName(u"tableWidget_socks")
-        self.tableWidget_socks.setMinimumSize(QSize(250, 0))
+        self.tableWidget_socks.setMinimumSize(QSize(266, 200))
 
         self.verticalLayout_2.addWidget(self.tableWidget_socks)
 
-
-        self.verticalLayout_4.addLayout(self.verticalLayout_2)
-
-        self.splitter.addWidget(self.layoutWidget)
-        self.layoutWidget1 = QWidget(self.splitter)
+        self.splitter.addWidget(self.layoutWidget3)
+        self.splitter_2.addWidget(self.splitter)
+        self.layoutWidget1 = QWidget(self.splitter_2)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
         self.verticalLayout_5 = QVBoxLayout(self.layoutWidget1)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
@@ -77,7 +77,7 @@ class Ui_PingTool(object):
 
         self.tableWidget_test = PingTable(self.layoutWidget1)
         self.tableWidget_test.setObjectName(u"tableWidget_test")
-        self.tableWidget_test.setMinimumSize(QSize(400, 500))
+        self.tableWidget_test.setMinimumSize(QSize(466, 500))
 
         self.verticalLayout_3.addWidget(self.tableWidget_test)
 
@@ -124,8 +124,8 @@ class Ui_PingTool(object):
 
         self.verticalLayout_5.addLayout(self.formLayout)
 
-        self.splitter.addWidget(self.layoutWidget1)
-        self.layoutWidget2 = QWidget(self.splitter)
+        self.splitter_2.addWidget(self.layoutWidget1)
+        self.layoutWidget2 = QWidget(self.splitter_2)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
         self.verticalLayout_6 = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
@@ -146,9 +146,9 @@ class Ui_PingTool(object):
 
         self.verticalLayout_6.addWidget(self.plainTextEdit)
 
-        self.splitter.addWidget(self.layoutWidget2)
+        self.splitter_2.addWidget(self.layoutWidget2)
 
-        self.horizontalLayout.addWidget(self.splitter)
+        self.horizontalLayout.addWidget(self.splitter_2)
 
 
         self.retranslateUi(PingTool)
