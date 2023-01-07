@@ -7,6 +7,7 @@ class RollingThread(QThread):
     def __init__(self, parent):
         super().__init__(parent)
         self.papa=parent
+        self.result=None
     
     def run(self):
         
@@ -20,6 +21,7 @@ class RollingThread(QThread):
                 new_value=info[self.papa.comboBox_connection_check.currentText()]
                 if old_value!=new_value:
                     self.papa.status=1
+                    self.result=info
                     break
                 else:
                     if self.papa.status==2:
@@ -619,10 +621,11 @@ DisallowedIPs =
         self.refresh()
 
         if showmessage==True:
+            name=self.wg_servers[self.current_wg_index]["name"]
             self.Headquarter.app.showMessage(
-                "Information",
                 "Tunnel Disconnected",
-                DTIcon.Information()
+                f"Server: {name}",
+                IconFromCurrentTheme("shield-off.svg")
             )
     
     def TunnelConnect(self):
@@ -686,10 +689,13 @@ Socks5Proxy = {self.socks_servers[self.current_socks_index]["ip"]}
 
         def slot():
             if self.status==1:
+                name=self.wg_servers[self.current_wg_index]["name"]
+                ip=self.rolling_thread.result['ip']
+                country=self.rolling_thread.result['country']
                 self.Headquarter.app.showMessage(
-                    "Information",
                     "Tunnel Connected",
-                    DTIcon.Information()
+                    f"Server: {name}\nIP: {ip}\nCountry: {country}",
+                    IconFromCurrentTheme("shield.svg")
                 )
             self.rolling_thread.deleteLater()
 
