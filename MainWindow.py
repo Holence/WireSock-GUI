@@ -354,7 +354,7 @@ DisallowedIPs =
     def updateWGServers(self):
         self.wg_servers=[]
         self.comboBox_wg.clear()
-        with open(self.wg_dir,"r") as f:
+        with open(self.wg_dir, "r", encoding="utf-8") as f:
             for line in f.readlines():
                 try:
                     comment=""
@@ -467,7 +467,7 @@ DisallowedIPs =
                     socks_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
             socks_list.sort(key=lambda x:x[-1])
 
-            with open(self.socks_dir,"w") as f:
+            with open(self.socks_dir, "w", encoding="utf-8") as f:
                 for i in socks_list:
                     f.write("%s,\t\t%s\t\t;%s\n"%(i[0],i[1],i[2]))
         
@@ -488,7 +488,7 @@ DisallowedIPs =
     def updateSocksServers(self):
         self.socks_servers=[]
         self.comboBox_socks.clear()
-        with open(self.socks_dir,"r") as f:
+        with open(self.socks_dir, "r", encoding="utf-8") as f:
             for line in f.readlines():
                 try:
                     comment=""
