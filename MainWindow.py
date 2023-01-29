@@ -348,7 +348,7 @@ DisallowedIPs =
             return
         
         try:
-            os.startfile(self.wg_dir)
+            Open_Explorer(self.wg_dir, False)
         except Exception as e:
             DTFrame.DTMessageBox(self,"Error",str(e),DTIcon.Error())
 
@@ -447,7 +447,7 @@ DisallowedIPs =
             return
         
         try:
-            os.startfile(self.socks_dir)
+            Open_Explorer(self.socks_dir, False)
         except Exception as e:
             DTFrame.DTMessageBox(self,"Error",str(e),DTIcon.Error())
     
