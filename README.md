@@ -4,6 +4,10 @@ This is a GUI for using WireSock to connect NordVPN.
 
 ## Installation
 
+You need to manually install [WireSock Client](https://www.wiresock.net/) first.
+
+Then install this GUI software:
+
 Download from [Github Release](https://github.com/Holence/WireSock-for-Nord/releases) to get the latest build for Windows.
 
 or build with pyinstaller on your own:
