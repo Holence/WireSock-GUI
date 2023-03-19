@@ -2,6 +2,8 @@
 
 This is a GUI for using WireSock to connect NordVPN.
 
+~~Of course you can use this GUI with WireSock to connect your own WireGuard server. The name has NordVPN in it just because I originally used Nord's server and made a built-in feature to get Nord's Socks5 server. I'm just too lazy to change the name now 😅~~
+
 ## Installation
 
 You need to manually install [WireSock Client](https://www.wiresock.net/) first.
