@@ -36,15 +36,9 @@ This is a GUI for [WireSock](https://www.wiresock.net/).
 
 4. The `Connection Check` field is the info of your `original` ip. When starts connecting it will check at ipinfo.io/json for `new` ip info, if `original!=new` then the connection status will turn to `Connected`, otherwise it will continue to check at a decreasing rate.
 
-## Demo
-
-Here is a demo:
+## Screenshot
 
 ![demo](demo/demo.png)
-
-and a built-in ping tool
-
-![demo2](demo/demo2.jpg)
 
 ## Reference
 
