@@ -9,13 +9,17 @@ def get_current_info(key):
         r=pool.urlopen("GET","/")
         text=r.data.decode("utf-8")
         res = json.loads(text)
+        
+        if res.get("error"):
+            # Rate Limit Error
+            return "Error"
+        
         if key=="all":
-            value=res
+            return res
         else:
-            value=res[key]
+            return res[key]
     except:
-        value="Failed"
-    return value
+        return "Failed"
 
 def ping_ip(ip, count, timeout):
     try:

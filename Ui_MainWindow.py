@@ -106,83 +106,6 @@ class Ui_MainWindow(object):
         self.gridLayout_2 = QGridLayout(self.tab_socks)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, -1)
-        self.label_13 = QLabel(self.tab_socks)
-        self.label_13.setObjectName(u"label_13")
-
-        self.gridLayout_2.addWidget(self.label_13, 3, 0, 1, 1)
-
-        self.comboBox_socks = QComboBox(self.tab_socks)
-        self.comboBox_socks.setObjectName(u"comboBox_socks")
-
-        self.gridLayout_2.addWidget(self.comboBox_socks, 10, 0, 1, 1)
-
-        self.comboBox_nordapi = QComboBox(self.tab_socks)
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.addItem("")
-        self.comboBox_nordapi.setObjectName(u"comboBox_nordapi")
-
-        self.gridLayout_2.addWidget(self.comboBox_nordapi, 4, 0, 1, 1)
-
-        self.pushButton_socks_file = DTApplyButton(self.tab_socks)
-        self.pushButton_socks_file.setObjectName(u"pushButton_socks_file")
-
-        self.gridLayout_2.addWidget(self.pushButton_socks_file, 2, 1, 1, 1)
-
-        self.pushButton_getsocks = DTApplyButton(self.tab_socks)
-        self.pushButton_getsocks.setObjectName(u"pushButton_getsocks")
-
-        self.gridLayout_2.addWidget(self.pushButton_getsocks, 4, 1, 1, 1)
-
-        self.label_3 = QLabel(self.tab_socks)
-        self.label_3.setObjectName(u"label_3")
-
-        self.gridLayout_2.addWidget(self.label_3, 5, 0, 1, 1)
-
-        self.lineEdit_socks_file = QLineEdit(self.tab_socks)
-        self.lineEdit_socks_file.setObjectName(u"lineEdit_socks_file")
-        self.lineEdit_socks_file.setReadOnly(True)
-
-        self.gridLayout_2.addWidget(self.lineEdit_socks_file, 2, 0, 1, 1)
-
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_2.addItem(self.verticalSpacer_3, 11, 0, 1, 1)
-
-        self.label_7 = QLabel(self.tab_socks)
-        self.label_7.setObjectName(u"label_7")
-
-        self.gridLayout_2.addWidget(self.label_7, 9, 0, 1, 1)
-
-        self.checkBox_socks = QCheckBox(self.tab_socks)
-        self.checkBox_socks.setObjectName(u"checkBox_socks")
-
-        self.gridLayout_2.addWidget(self.checkBox_socks, 0, 0, 1, 1)
-
-        self.label_5 = QLabel(self.tab_socks)
-        self.label_5.setObjectName(u"label_5")
-
-        self.gridLayout_2.addWidget(self.label_5, 7, 0, 1, 1)
-
-        self.lineEdit_socks_pw = QLineEdit(self.tab_socks)
-        self.lineEdit_socks_pw.setObjectName(u"lineEdit_socks_pw")
-
-        self.gridLayout_2.addWidget(self.lineEdit_socks_pw, 8, 0, 1, 1)
-
-        self.lineEdit_socks_un = QLineEdit(self.tab_socks)
-        self.lineEdit_socks_un.setObjectName(u"lineEdit_socks_un")
-
-        self.gridLayout_2.addWidget(self.lineEdit_socks_un, 6, 0, 1, 1)
-
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.label_6 = QLabel(self.tab_socks)
@@ -201,6 +124,36 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_2.addLayout(self.horizontalLayout_3, 1, 0, 1, 1)
+
+        self.comboBox_socks = QComboBox(self.tab_socks)
+        self.comboBox_socks.setObjectName(u"comboBox_socks")
+
+        self.gridLayout_2.addWidget(self.comboBox_socks, 4, 0, 1, 1)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer_3, 5, 0, 1, 1)
+
+        self.checkBox_socks = QCheckBox(self.tab_socks)
+        self.checkBox_socks.setObjectName(u"checkBox_socks")
+
+        self.gridLayout_2.addWidget(self.checkBox_socks, 0, 0, 1, 1)
+
+        self.pushButton_socks_file = DTApplyButton(self.tab_socks)
+        self.pushButton_socks_file.setObjectName(u"pushButton_socks_file")
+
+        self.gridLayout_2.addWidget(self.pushButton_socks_file, 2, 1, 1, 1)
+
+        self.label_7 = QLabel(self.tab_socks)
+        self.label_7.setObjectName(u"label_7")
+
+        self.gridLayout_2.addWidget(self.label_7, 3, 0, 1, 1)
+
+        self.lineEdit_socks_file = QLineEdit(self.tab_socks)
+        self.lineEdit_socks_file.setObjectName(u"lineEdit_socks_file")
+        self.lineEdit_socks_file.setReadOnly(True)
+
+        self.gridLayout_2.addWidget(self.lineEdit_socks_file, 2, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_socks, "")
         self.tab_wiresock = QWidget()
@@ -344,28 +297,11 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"WireGuard IP List File", None))
         self.pushButton_openwg.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_wireguard), QCoreApplication.translate("MainWindow", u"WireGuard", None))
-        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Get Socks5 Server from Nord API", None))
-        self.comboBox_nordapi.setItemText(0, QCoreApplication.translate("MainWindow", u"https://api.nordvpn.com", None))
-        self.comboBox_nordapi.setItemText(1, QCoreApplication.translate("MainWindow", u"https://zwyr157wwiu6eior.com", None))
-        self.comboBox_nordapi.setItemText(2, QCoreApplication.translate("MainWindow", u"https://qfvi5yhkk86d38x.xyz", None))
-        self.comboBox_nordapi.setItemText(3, QCoreApplication.translate("MainWindow", u"https://nllp8upbpk2da4p.xyz", None))
-        self.comboBox_nordapi.setItemText(4, QCoreApplication.translate("MainWindow", u"https://icpsuawn1zy5amys.com", None))
-        self.comboBox_nordapi.setItemText(5, QCoreApplication.translate("MainWindow", u"https://ltlxvxjjmvhn.me", None))
-        self.comboBox_nordapi.setItemText(6, QCoreApplication.translate("MainWindow", u"https://boi9osyg1uwtyafn.com", None))
-        self.comboBox_nordapi.setItemText(7, QCoreApplication.translate("MainWindow", u"https://x9fnzrtl4x8pynsf.com", None))
-        self.comboBox_nordapi.setItemText(8, QCoreApplication.translate("MainWindow", u"https://judua3rtinpst0s.xyz", None))
-        self.comboBox_nordapi.setItemText(9, QCoreApplication.translate("MainWindow", u"https://ns8469rfvth42.xyz", None))
-        self.comboBox_nordapi.setItemText(10, QCoreApplication.translate("MainWindow", u"https://njtzzrvg0lwj3bsn.info", None))
-        self.comboBox_nordapi.setItemText(11, QCoreApplication.translate("MainWindow", u"https://mzhlhrfr8z.info", None))
-
-        self.pushButton_socks_file.setText("")
-        self.pushButton_getsocks.setText("")
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Socks5 Username", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Socks5 Server", None))
-        self.checkBox_socks.setText(QCoreApplication.translate("MainWindow", u"Enable Socks5", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Socks5 Password", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Socks5 List File", None))
         self.pushButton_opensocks.setText("")
+        self.checkBox_socks.setText(QCoreApplication.translate("MainWindow", u"Enable Socks5", None))
+        self.pushButton_socks_file.setText("")
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Socks5 Server", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_socks), QCoreApplication.translate("MainWindow", u"Socks5", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Log Level", None))
         self.comboBox_log.setItemText(0, QCoreApplication.translate("MainWindow", u"none", None))

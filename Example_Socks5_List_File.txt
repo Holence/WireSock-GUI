@@ -1,2 +1,3 @@
-US_1, us.socks.nordhold.net:1080 ;comment
-US_2, xxx.xxx.xxx.xxx:1080
+US_1, us.socks.nordhold.net:1080 ,USERNAME, PASSWORD ;comment
+US_2, xxx.xxx.xxx.xxx:1080, , ;no USERNAME and no PASSWORD
+US_3, xxx.xxx.xxx.xxx:1080, , 

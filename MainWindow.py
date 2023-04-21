@@ -17,7 +17,26 @@ class RollingThread(QThread):
         old_value=self.papa.lineEdit_connection_check.text()
         while True:
             info=get_current_info('all')
-            if info!="Failed":
+            if info=="Failed":
+                self.papa.rolling(wait)
+                wait+=2
+            elif info=="Error":
+                # Rate Limit Error
+                self.papa.status=1
+                info={
+                    "ip": "Error",
+                    "city": "Error",
+                    "region": "Error",
+                    "country": "Error",
+                    "loc": "Error",
+                    "org": "Error",
+                    "postal": "Error",
+                    "timezone": "Error",
+                    "readme": "Error"
+                }
+                self.result=info
+                break
+            else:
                 new_value=info[self.papa.comboBox_connection_check.currentText()]
                 if old_value!=new_value:
                     self.papa.status=1
@@ -29,9 +48,6 @@ class RollingThread(QThread):
                         wait+=2
                     else:
                         return
-            else:
-                self.papa.rolling(wait)
-                wait+=2
         
         self.papa.updateStatus(info=info)
 
@@ -106,10 +122,6 @@ class MainWindow(Ui_MainWindow,QWidget):
         self.checkBox_socks.stateChanged.connect(lambda :self.setSocksEnable(self.checkBox_socks.isChecked()))
         self.pushButton_socks_file.clicked.connect(self.setSocksDir)
         self.pushButton_opensocks.clicked.connect(self.openSocks)
-        self.pushButton_getsocks.clicked.connect(self.getSocks)
-        self.comboBox_nordapi.activated.connect(lambda :self.Headquarter.UserSetting().setValue("Socks/SocksAPI", self.comboBox_nordapi.currentIndex()))
-        self.lineEdit_socks_un.textEdited.connect(self.setSocksUN)
-        self.lineEdit_socks_pw.textEdited.connect(self.setSocksPW)
         self.comboBox_socks.activated.connect(self.setSocksServer)
 
         self.comboBox_log.activated.connect(self.setLogLevel)
@@ -156,7 +168,6 @@ DisallowedApps = TIM
 AllowedIPs = 
 DisallowedIPs = 
 """)
-        self.pushButton_getsocks.setIcon(IconFromCurrentTheme("download-cloud.svg"))
 
         self.pushButton_openwg.setStyleSheet("QPushButton{ min-height:16px; max-height:16px; min-width:16px; max-width:16px; icon-size:12px; }")
         self.pushButton_openwg.setIcon(IconFromCurrentTheme("external-link.svg"))
@@ -198,18 +209,6 @@ DisallowedIPs =
         
         self.socks_dir=self.Headquarter.UserSetting().value("Socks/SocksDir")
         self.lineEdit_socks_file.setText(self.socks_dir)
-
-        socks_api=self.Headquarter.UserSetting().value("Socks/SocksAPI")
-        if not socks_api:
-            socks_api=0
-            self.Headquarter.UserSetting().setValue("Socks/SocksAPI",socks_api)
-        self.comboBox_nordapi.setCurrentIndex(int(socks_api))
-        
-        self.socks_un=self.Headquarter.UserSetting().value("Socks/SocksUN")
-        self.lineEdit_socks_un.setText(self.socks_un)
-        
-        self.socks_pw=self.Headquarter.UserSetting().value("Socks/SocksPW")
-        self.lineEdit_socks_pw.setText(self.socks_pw)
 
         self.current_socks_index=self.Headquarter.UserSetting().value("Socks/SocksIndex")
         if self.current_socks_index==None:
@@ -325,7 +324,7 @@ DisallowedIPs =
                 max-width: 26px;
             """)
             
-            self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon/icon-down.ico")))
+            self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon/icon.ico")))
             self.actionToggle_Connection.setIcon(IconFromCurrentTheme("wifi-off.svg"))
             self.actionToggle_Connection.setText("Connected")
     
@@ -414,10 +413,6 @@ DisallowedIPs =
         self.checkBox_socks.setChecked(self.socks_enable)
         self.Headquarter.UserSetting().setValue("Socks/SocksEnable",self.socks_enable)
         self.pushButton_socks_file.setEnabled(self.socks_enable)
-        self.comboBox_nordapi.setEnabled(self.socks_enable)
-        self.pushButton_getsocks.setEnabled(self.socks_enable)
-        self.lineEdit_socks_un.setEnabled(self.socks_enable)
-        self.lineEdit_socks_pw.setEnabled(self.socks_enable)
         self.comboBox_socks.setEnabled(self.socks_enable)
 
         self.Headquarter.menu_socks.setEnabled(self.socks_enable)
@@ -450,42 +445,6 @@ DisallowedIPs =
             Open_Explorer(self.socks_dir, False)
         except Exception as e:
             DTFrame.DTMessageBox(self,"Error",str(e),DTIcon.Error())
-    
-    def getSocks(self):
-        if not self.socks_dir:
-            DTFrame.DTMessageBox(self,"Warning","Please select Socks5 Servers List File first!",DTIcon.Warning())
-            return
-        
-        try:
-            url="%s/v1/servers?limit=20000"%self.comboBox_nordapi.currentText()
-            pool=urllib3.connection_from_url(url,timeout=8)
-            r=pool.urlopen("GET",url)
-            text=r.data.decode("utf-8")
-            servers = json.loads(text)
-
-            socks_list=[]
-            for i in servers:
-                if "socks" in i["hostname"]:
-                    socks_list.append((i["hostname"].replace("socks-","").replace(".nordvpn.com",""),i["station"]+":1080",i["load"]))
-            socks_list.sort(key=lambda x:x[-1])
-
-            with open(self.socks_dir, "w", encoding="utf-8") as f:
-                for i in socks_list:
-                    f.write("%s,\t\t%s\t\t;%s\n"%(i[0],i[1],i[2]))
-        
-            self.updateSocksServers()
-            DTFrame.DTMessageBox(self,"Information","Success",DTIcon.Happy())
-
-        except Exception as e:
-            DTFrame.DTMessageBox(self,"Error",str(e),DTIcon.Error())
-    
-    def setSocksUN(self,un):
-        self.socks_un=un
-        self.Headquarter.UserSetting().setValue("Socks/SocksUN",self.socks_un)
-
-    def setSocksPW(self,pw):
-        self.socks_pw=pw
-        self.Headquarter.UserSetting().setValue("Socks/SocksPW",self.socks_pw)
 
     def updateSocksServers(self):
         self.socks_servers=[]
@@ -497,10 +456,12 @@ DisallowedIPs =
                     if ";" in line:
                         line,comment=line.strip().split(";")
                     
-                    name,ip=map(str.strip,line.split(","))
+                    name,ip,un,pw=map(str.strip,line.split(","))
                     self.socks_servers.append({
                         "name": name,
-                        "ip": ip
+                        "ip": ip,
+                        "un": un,
+                        "pw": pw
                     })
                     if not comment:
                         self.comboBox_socks.addItem(name+" - "+ip)
@@ -601,10 +562,6 @@ DisallowedIPs =
         self.actionEnable_Socks.setEnabled(True)
         if self.socks_enable:
             self.pushButton_socks_file.setEnabled(True)
-            self.comboBox_nordapi.setEnabled(True)
-            self.pushButton_getsocks.setEnabled(True)
-            self.lineEdit_socks_un.setEnabled(True)
-            self.lineEdit_socks_pw.setEnabled(True)
             self.comboBox_socks.setEnabled(True)
             self.Headquarter.menu_socks.setEnabled(True)
 
@@ -639,10 +596,6 @@ DisallowedIPs =
         self.actionEnable_Socks.setEnabled(False)
         if self.socks_enable:
             self.pushButton_socks_file.setEnabled(False)
-            self.comboBox_nordapi.setEnabled(False)
-            self.pushButton_getsocks.setEnabled(False)
-            self.lineEdit_socks_un.setEnabled(False)
-            self.lineEdit_socks_pw.setEnabled(False)
             self.comboBox_socks.setEnabled(False)
             self.Headquarter.menu_socks.setEnabled(False)
 
@@ -664,15 +617,14 @@ DNS = 103.86.99.98, 103.86.96.98
 PublicKey = {self.wg_servers[self.current_wg_index]["pubkey"]}
 AllowedIPs = 0.0.0.0/0
 Endpoint = {self.wg_servers[self.current_wg_index]["ip"]}:51820
-{self.plainTextEdit_extra_conf.toPlainText()}""")
-            if self.socks_enable:
-                f.write(f"""
-Socks5ProxyUsername = {self.socks_un}
-Socks5ProxyPassword = {self.socks_pw}
-Socks5Proxy = {self.socks_servers[self.current_socks_index]["ip"]}
+{self.plainTextEdit_extra_conf.toPlainText()}
 """)
-
-        self.Headquarter.app.TrayIcon.setIcon(QIcon(QPixmap("icon/icon-wait.ico")))
+            if self.socks_enable:
+                f.write(f"Socks5Proxy = {self.socks_servers[self.current_socks_index]['ip']}\n")
+                if self.socks_servers[self.current_socks_index]['un']:
+                    f.write(f"Socks5ProxyUsername = {self.socks_servers[self.current_socks_index]['un']}\n")
+                if self.socks_servers[self.current_socks_index]['pw']:
+                    f.write(f"Socks5ProxyPassword = {self.socks_servers[self.current_socks_index]['pw']}\n")
 
         self.plainTextEdit.clear()
 
@@ -711,7 +663,7 @@ Socks5Proxy = {self.socks_servers[self.current_socks_index]["ip"]}
                 DTFrame.DTMessageBox(self,"Warning","WireGuard info incomplete!",DTIcon.Warning())
                 return
             if self.socks_enable:
-                if self.lineEdit_socks_un.text()=="" or self.lineEdit_socks_pw.text()=="" or self.comboBox_socks.currentIndex()==-1:
+                if self.comboBox_socks.currentIndex()==-1:
                     DTFrame.DTMessageBox(self,"Warning","Socks5 info incomplete!",DTIcon.Warning())
                     return
             if self.lineEdit_connection_check.text()=="":
